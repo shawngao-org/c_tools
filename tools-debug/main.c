@@ -98,6 +98,8 @@ void test_get_start_time() {
 
 int main() {
     hello();
+    setenv("TZ", "Etc/GMT-8", 1);
+    tzset();
     test_get_current_time();
     test_get_time_string();
     test_get_time_by_string();
