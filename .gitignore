@@ -1,0 +1,10 @@
+build
+cmake-build-debug
+.idea
+
+tools-debug/cmake-build-debug
+tools-debug/.idea
+tools-debug/.cmake
+tools-debug/CMakeFiles
+tools-debug/Testing
+tools-debug/tools_debug
