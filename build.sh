@@ -28,9 +28,7 @@ if [ $REPLY = Y ] || [ $REPLY = y ]; then
   echo -e "\033[0;33mInstalling..."
   sudo make install
   system=`uname`
-  if [ "$system" == "Darwin" ]; then
-    # Mac OS
-  else
+  if [ "$system" != "Darwin" ]; then
     ldconfig
   fi
   if [ $? -eq 0 ]; then
