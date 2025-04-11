@@ -14,7 +14,7 @@ struct tm *get_current_time(void);
  * @param tm struct tm ptr
  * @return time string "yyyy-MM-dd hh-mm-ss"
  */
-char* get_time_string(struct tm *);
+char* get_time_string(const struct tm *);
 
 /**
  * Get struct tm ptr by time string

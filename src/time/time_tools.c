@@ -9,10 +9,18 @@
 struct tm *get_current_time() {
     time_t t;
     time(&t);
-    return localtime(&t);
+    struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
+#ifdef _WIN32
+    localtime_s(&t, buf);
+#elif __linux__
+    localtime_r(&t, buf);
+#elif __APPLE__
+    localtime_r(&t, buf);
+#endif
+    return buf;
 }
 
-char *get_time_string(struct tm *time) {
+char *get_time_string(const struct tm *time) {
     char *buffer = (char *) malloc(sizeof(char) * 20);
     strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", time);
     return buffer;
@@ -30,6 +38,13 @@ long get_timestamp_by_time(struct tm *time) {
 
 struct tm *get_time_by_timestamp(long timestamp) {
     struct tm *time;
-    time = localtime(&timestamp);
+    struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
+#ifdef _WIN32
+    time = localtime_s(&timestamp, buf);
+#elif __linux__
+    time = localtime_r(&timestamp, buf);
+#elif __APPLE__
+    time = localtime_r(&timestamp, buf);
+#endif
     return time;
 }

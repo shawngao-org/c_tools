@@ -6,7 +6,7 @@
 #define TOOLS_TIME_TOOLS_H
 
 struct tm *get_current_time(void);
-char* get_time_string(struct tm *);
+char* get_time_string(const struct tm *);
 struct tm *get_time_by_string(char *);
 long get_timestamp_by_time(struct tm *);
 struct tm *get_time_by_timestamp(long);
