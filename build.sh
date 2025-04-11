@@ -29,7 +29,7 @@ if [ $REPLY = Y ] || [ $REPLY = y ]; then
   sudo make install
   system=`uname`
   if [ "$system" != "Darwin" ]; then
-    ldconfig
+    sudo ldconfig
   fi
   if [ $? -eq 0 ]; then
     echo -e "\033[0;32mInstall Successful!\033[0m"
