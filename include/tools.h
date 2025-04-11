@@ -55,4 +55,12 @@ long get_timestamp_by_time(struct tm *);
  */
 struct tm *get_time_by_timestamp(long);
 
+/**
+ * Get start time by struct tm ptr and type
+ * @param time struct tm ptr
+ * @param type m: minute, H: hour D: day, M: month
+ * @return struct tm ptr
+ */
+struct tm *get_start_time(struct tm *time, char type);
+
 #endif //TOOLS_TOOLS_H
