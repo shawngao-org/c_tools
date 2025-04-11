@@ -4,11 +4,11 @@ DIRECTORY="build"
 echo -e "\033[0;33mCheck if the $DIRECTORY directory exists..."
 if [ -d "$DIRECTORY" ]; then
   echo -e "\033[0;34mThe $DIRECTORY directory already exists. Deleting $DIRECTORY directory..."
-  rm -rf $DIRECTORY
+  rm -rf "$DIRECTORY"
 fi
 echo -e "\033[0;33mCreating directory and enter $DIRECTORY"
-mkdir $DIRECTORY
-cd $DIRECTORY
+mkdir "$DIRECTORY"
+cd "$DIRECTORY"
 echo -e "\033[0;33mCMaking..."
 cmake ..
 echo -e "\033[0;33mMaking..."
