@@ -19,14 +19,14 @@ else
   echo -e "\033[0;31mBuild Failed!"
   exit 1
 fi
-echo -e "\033[0;38mDo you want to install this lib? (Y/N) [default in 5s: Y]: "
+echo -e "\033[0;38mDo you want to install this lib to system? (Y/N) [default in 5s: Y]: "
 read -t 5 REPLY
 if [ -z "$age" ]; then
   REPLY=Y
 fi
 if [ $REPLY = Y ] || [ $REPLY = y ]; then
   echo -e "\033[0;33mInstalling..."
-  make install
+  sudo make install
   if [ $? -eq 0 ]; then
     echo -e "\033[0;32mInstall Successful!\033[0m"
   else
