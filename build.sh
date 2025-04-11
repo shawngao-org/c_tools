@@ -21,10 +21,10 @@ else
 fi
 echo -e "\033[0;38mDo you want to install this lib to system? (Y/N) [default in 5s: Y]: "
 read -t 5 REPLY
-if [ -z $REPLY ]; then
+if [ -z "$REPLY" ]; then
   REPLY="Y"
 fi
-if [ $REPLY = Y ] || [ $REPLY = y ]; then
+if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
   echo -e "\033[0;33mInstalling..."
   sudo make install
   system=`uname`

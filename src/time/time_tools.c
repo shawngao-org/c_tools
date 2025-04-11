@@ -10,6 +10,9 @@ struct tm *get_current_time() {
     time_t t;
     time(&t);
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
+    if (buf == NULL) {
+        return NULL;
+    }
 #ifdef _WIN32
     localtime_s(buf, &t);
 #elif __linux__
@@ -38,6 +41,9 @@ long get_timestamp_by_time(struct tm *time) {
 
 struct tm *get_time_by_timestamp(long timestamp) {
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
+    if (buf == NULL) {
+        return NULL;
+    }
 #ifdef _WIN32
     localtime_s(buf, &timestamp);
 #elif __linux__
