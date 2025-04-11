@@ -19,10 +19,10 @@ else
   echo -e "\033[0;31mBuild Failed!"
   exit 1
 fi
-echo -e "\033[0;38mDo you want to install this lib to system? (Y/N) [default in 5s: N]: "
+echo -e "\033[0;38mDo you want to install this lib to system? (Y/N) [default in 5s: Y]: "
 read -t 5 REPLY
 if [ -z $REPLY ]; then
-  REPLY="N"
+  REPLY="Y"
 fi
 if [ $REPLY = Y ] || [ $REPLY = y ]; then
   echo -e "\033[0;33mInstalling..."
