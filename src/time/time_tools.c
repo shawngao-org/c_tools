@@ -57,12 +57,24 @@ struct tm *get_start_time(struct tm *time, char type) {
     switch (type) {
         case 'M': {
             time->tm_mon = 0;
+            time->tm_mday = 1;
+            time->tm_hour = 0;
+            time->tm_min = 0;
+            time->tm_sec = 0;
+            break;
         }
         case 'D': {
             time->tm_mday = 1;
+            time->tm_hour = 0;
+            time->tm_min = 0;
+            time->tm_sec = 0;
+            break;
         }
         case 'H': {
             time->tm_hour = 0;
+            time->tm_min = 0;
+            time->tm_sec = 0;
+            break;
         }
         case 'm': {
             time->tm_min = 0;

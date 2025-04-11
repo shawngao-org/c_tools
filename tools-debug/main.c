@@ -8,6 +8,7 @@ void test_get_current_time() {
     int b = get_current_time() != NULL;
     printf("Current time is not null: %d\n", b);
     if (!b) {
+        fprintf(stderr, "Error: get_current_time() returned NULL.\n");
         exit(1);
     }
 }
@@ -21,6 +22,7 @@ void test_get_time_string() {
     printf("Current time string is not null: %d\n", n);
     printf("Current time string is not empty: %d\n", e);
     if (!n || !e) {
+        fprintf(stderr, "Error: get_time_string() returned NULL or Empty.\n");
         exit(1);
     }
 }
@@ -32,11 +34,13 @@ void test_get_time_by_string() {
     int n = time != NULL;
     printf("Current time is not null: %d\n", n);
     if (!n) {
+        fprintf(stderr, "Error: get_time_by_string() returned NULL.\n");
         exit(1);
     }
     char *time_string_converted = get_time_string(time);
     printf("Time string: %s\n", time_string_converted);
     if (strcmp(time_string, time_string_converted) != 0) {
+        fprintf(stderr, "Error: get_time_by_string() results don\'t match.");
         exit(1);
     }
 }
@@ -52,9 +56,11 @@ void test_get_timestamp_by_time() {
     printf("Current timestamp: %ld\n", timestamp);
     printf("Original timestamp: %ld\n", original_ts);
     if (!n) {
+        fprintf(stderr, "Error: get_timestamp_by_time() returned NULL.\n");
         exit(1);
     }
     if (timestamp != original_ts) {
+        fprintf(stderr, "Error: get_timestamp_by_time() results don\'t match.");
         exit(1);
     }
 }
@@ -71,6 +77,7 @@ void test_get_time_by_timestamp() {
     printf("Current time string: %s\n", get_time_string(time));
     printf("Current timestamp: %ld\n", get_timestamp_by_time(time));
     if (!n) {
+        fprintf(stderr, "Error: get_time_by_timestamp() returned NULL.\n");
         exit(1);
     }
 }
@@ -89,9 +96,11 @@ void test_get_start_time() {
     printf("Start time string: %s\n", get_time_string(start_time));
     printf("Target time string: %s\n", target_string);
     if (!n) {
+        fprintf(stderr, "Error: get_start_time() returned NULL.\n");
         exit(1);
     }
     if (strcmp(get_time_string(start_time), target_string) != 0) {
+        fprintf(stderr, "Error: get_start_time() results don\'t match.");
         exit(1);
     }
 }
