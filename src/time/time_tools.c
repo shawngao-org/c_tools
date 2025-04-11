@@ -24,7 +24,8 @@ struct tm *get_current_time() {
     time_t t;
     time(&t);
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
-    return safe_localtime(&t, buf);
+    safe_localtime(&t, buf);
+    return buf;
 }
 
 char *get_time_string(const struct tm *time) {
@@ -45,5 +46,6 @@ long get_timestamp_by_time(struct tm *time) {
 
 struct tm *get_time_by_timestamp(long timestamp) {
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
-    return safe_localtime(&timestamp, buf);
+    safe_localtime(&timestamp, buf);
+    return buf;
 }
