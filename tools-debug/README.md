@@ -3,7 +3,7 @@
 + This project is mainly used to run and debug C Tools.
 
 ## License
-This project is licensed under the ***MIT*** License - see the LICENSE.md file for details.
+This project is licensed under the **MIT** License - see the LICENSE.md file for details.
 
 ## Acknowledgments
 
