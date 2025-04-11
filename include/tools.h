@@ -1,7 +1,19 @@
 #ifndef TOOLS_TOOLS_H
 #define TOOLS_TOOLS_H
 
+#include <time.h>
+
 void hello(void);
+
+/**
+ * Get struct tm ptr by time_t ptr
+ * safe_localtime returns a pointer to a dynamically allocated struct tm.
+ * Caller is responsible for freeing the returned pointer to avoid memory leaks.
+ * @param time_ptr time_t ptr
+ * @param buf time buffer
+ * @return struct tm ptr, if NULL is returned, it means that the current system platform is not supported.
+ */
+struct tm* safe_localtime(const time_t *time_ptr, struct tm *buf);
 
 /**
  * Get current time

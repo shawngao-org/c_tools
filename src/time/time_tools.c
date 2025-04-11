@@ -6,21 +6,25 @@
 #include <time.h>
 #include <stdlib.h>
 
-struct tm *get_current_time() {
-    time_t t;
-    time(&t);
-    struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
+struct tm* safe_localtime(const time_t *time_ptr, struct tm *buf) {
     if (buf == NULL) {
         return NULL;
     }
 #ifdef _WIN32
-    localtime_s(buf, &t);
-#elif __linux__
-    localtime_r(&t, buf);
-#elif __APPLE__
-    localtime_r(&t, buf);
+    if (localtime_s(buf, time_ptr) != 0) return NULL;
+#elif defined(__linux__) || defined(__APPLE__)
+    if (localtime_r(time_ptr, buf) == NULL) return NULL;
+#else
+    return NULL;
 #endif
     return buf;
+}
+
+struct tm *get_current_time() {
+    time_t t;
+    time(&t);
+    struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
+    return safe_localtime(&t, buf);
 }
 
 char *get_time_string(const struct tm *time) {
@@ -41,15 +45,5 @@ long get_timestamp_by_time(struct tm *time) {
 
 struct tm *get_time_by_timestamp(long timestamp) {
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
-    if (buf == NULL) {
-        return NULL;
-    }
-#ifdef _WIN32
-    localtime_s(buf, &timestamp);
-#elif __linux__
-    localtime_r(&timestamp, buf);
-#elif __APPLE__
-    localtime_r(&timestamp, buf);
-#endif
-    return buf;
+    return safe_localtime(&timestamp, buf);
 }
