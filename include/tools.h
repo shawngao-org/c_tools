@@ -28,7 +28,7 @@ struct tm *get_current_time(void);
  * @param tm struct tm ptr
  * @return time string "yyyy-MM-dd hh-mm-ss"
  */
-char* get_time_string(const struct tm *);
+char* get_time_string(const struct tm * tm);
 
 /**
  * Get struct tm ptr by time string
@@ -37,14 +37,14 @@ char* get_time_string(const struct tm *);
  * @param time_string time string "yyyy-MM-dd hh-mm-ss"
  * @return struct tm ptr
  */
-struct tm *get_time_by_string(char *);
+struct tm *get_time_by_string(char * time_string);
 
 /**
  * Get timestamp by struct tm ptr
  * @param tm struct tm ptr
  * @return seconds timestamp
  */
-long get_timestamp_by_time(struct tm *);
+long long get_timestamp_by_time(struct tm * tm);
 
 /**
  * Get struct tm ptr by timestamp
@@ -53,7 +53,7 @@ long get_timestamp_by_time(struct tm *);
  * @param timestamp seconds timestamp
  * @return struct tm ptr
  */
-struct tm *get_time_by_timestamp(long);
+struct tm *get_time_by_timestamp(long long timestamp);
 
 /**
  * Get start time by struct tm ptr and type

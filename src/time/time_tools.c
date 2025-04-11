@@ -3,8 +3,12 @@
 //
 
 #include "../../include/time/time_tools.h"
+
+#include <ctype.h>
 #include <time.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct tm* safe_localtime(const time_t *time_ptr, struct tm *buf) {
     if (buf == NULL) {
@@ -34,17 +38,85 @@ char *get_time_string(const struct tm *time) {
     return buffer;
 }
 
+#ifdef _WIN32
+void win_strptime(const char *s, const char *format, struct tm *tm) {
+    memset(tm, 0, sizeof(struct tm));
+    if (tm == NULL) return;
+    errno = 0;
+    while (*format) {
+        if (isspace(*format)) {
+            while (isspace(*s)) {
+                s++;
+            }
+            format++;
+            continue;
+        }
+        if (*format == '%') {
+            format++;
+            if (*format == '\0') {
+                return;
+            }
+            if (*format == 'Y') {
+                if (strtol(s, "%4d", tm->tm_year) != 1) return;
+                tm->tm_year -= 1900;
+                while (isdigit(*s)) s++;
+            } else if (*format == 'm') {
+                if (strtol(s, "%2d", tm->tm_mon) != 1) return;
+                tm->tm_mon -= 1;
+                while (isdigit(*s)) s++;
+            } else if (*format == 'd') {
+                if (strtol(s, "%2d", tm->tm_mday) != 1) return;
+                while (isdigit(*s)) s++;
+            } else if (*format == 'H') {
+                if (strtol(s, "%2d", tm->tm_hour) != 1) return;
+                while (isdigit(*s)) s++;
+            } else if (*format == 'M') {
+                if (strtol(s, "%2d", tm->tm_min) != 1) return;
+                while (isdigit(*s)) s++;
+            } else if (*format == 'S') {
+                if (strtol(s, "%2d", tm->tm_sec) != 1) return;
+                while (isdigit(*s)) s++;
+            } else if (*format == '-') {
+                if (*s != '-') return;
+                s++;
+            } else if (*format == ':') {
+                if (*s != ':') return;
+                s++;
+            } else if (*format == ' ') {
+                if (*s != ' ') return;
+                s++;
+            } else {
+                return;
+            }
+            format++;
+        } else {
+            if (*s != *format) {
+                return;
+            }
+            s++;
+            format++;
+        }
+    }
+}
+#endif
+
 struct tm *get_time_by_string(char *time_string) {
     struct tm *time = (struct tm *) malloc(sizeof(struct tm));
+#ifdef _WIN32
+    win_strptime(time_string, "%Y-%m-%d %H:%M:%S", time);
+#elif defined(__linux__) || defined(__APPLE__)
     strptime(time_string, "%Y-%m-%d %H:%M:%S", time);
+#else
+    return NULL;
+#endif
     return time;
 }
 
-long get_timestamp_by_time(struct tm *time) {
+long long get_timestamp_by_time(struct tm *time) {
     return mktime(time);
 }
 
-struct tm *get_time_by_timestamp(long timestamp) {
+struct tm *get_time_by_timestamp(const long long timestamp) {
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
     safe_localtime(&timestamp, buf);
     return buf;

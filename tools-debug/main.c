@@ -5,7 +5,7 @@
 
 void test_get_current_time() {
     printf("\nTest: get_current_time()\n");
-    int b = get_current_time() != NULL;
+    const int b = get_current_time() != NULL;
     printf("Current time is not null: %d\n", b);
     if (!b) {
         fprintf(stderr, "Error: get_current_time() returned NULL.\n");
@@ -15,10 +15,10 @@ void test_get_current_time() {
 
 void test_get_time_string() {
     printf("\nTest: get_time_string()\n");
-    struct tm *time = get_current_time();
-    char *time_string = get_time_string(time);
-    int n = time_string != NULL;
-    int e = time_string[0] != '\0';
+    const struct tm *time = get_current_time();
+    const char *time_string = get_time_string(time);
+    const int n = time_string != NULL;
+    const int e = time_string[0] != '\0';
     printf("Current time string is not null: %d\n", n);
     printf("Current time string is not empty: %d\n", e);
     if (!n || !e) {
@@ -30,8 +30,8 @@ void test_get_time_string() {
 void test_get_time_by_string() {
     printf("\nTest: get_time_by_string()\n");
     char *time_string = "2025-01-01 00:00:00";
-    struct tm *time = get_time_by_string(time_string);
-    int n = time != NULL;
+    const struct tm *time = get_time_by_string(time_string);
+    const int n = time != NULL;
     printf("Current time is not null: %d\n", n);
     if (!n) {
         fprintf(stderr, "Error: get_time_by_string() returned NULL.\n");
@@ -47,13 +47,13 @@ void test_get_time_by_string() {
 
 void test_get_timestamp_by_time() {
     printf("\nTest: get_timestamp_by_time()\n");
-    long original_ts = 1735660800;
+    const long original_ts = 1735660800;
     char *time_string = "2025-01-01 00:00:00";
     struct tm *time = get_time_by_string(time_string);
-    long timestamp = get_timestamp_by_time(time);
-    int n = timestamp != 0;
+    const long long timestamp = get_timestamp_by_time(time);
+    const int n = timestamp != 0;
     printf("Current timestamp is not zero: %d\n", n);
-    printf("Current timestamp: %ld\n", timestamp);
+    printf("Current timestamp: %lld\n", timestamp);
     printf("Original timestamp: %ld\n", original_ts);
     if (!n) {
         fprintf(stderr, "Error: get_timestamp_by_time() returned NULL.\n");
@@ -69,13 +69,13 @@ void test_get_time_by_timestamp() {
     printf("\nTest: get_time_by_timestamp()\n");
     struct tm *original_t = get_current_time();
     printf("Original time string: %s\n", get_time_string(original_t));
-    long timestamp = get_timestamp_by_time(original_t);
-    printf("Original timestamp: %ld\n", timestamp);
+    const long long timestamp = get_timestamp_by_time(original_t);
+    printf("Original timestamp: %lld\n", timestamp);
     struct tm *time = get_time_by_timestamp(timestamp);
-    int n = time != NULL;
+    const int n = time != NULL;
     printf("Current time is not null: %d\n", n);
     printf("Current time string: %s\n", get_time_string(time));
-    printf("Current timestamp: %ld\n", get_timestamp_by_time(time));
+    printf("Current timestamp: %lld\n", get_timestamp_by_time(time));
     if (!n) {
         fprintf(stderr, "Error: get_time_by_timestamp() returned NULL.\n");
         exit(1);
@@ -86,10 +86,10 @@ void test_get_start_time() {
     printf("\nTest: get_start_time()\n");
     char *time_string = "2025-05-10 07:30:50";
     char *target_string = "2025-01-01 00:00:00";
-    char type = 'M';
+    const char type = 'M';
     struct tm *time = get_time_by_string(time_string);
-    struct tm *start_time = get_start_time(time, type);
-    int n = start_time != NULL;
+    const struct tm *start_time = get_start_time(time, type);
+    const int n = start_time != NULL;
     printf("Start time is not null: %d\n", start_time != NULL);
     printf("Start time type: %c\n", type);
     printf("Original time string: %s\n", time_string);
@@ -106,14 +106,17 @@ void test_get_start_time() {
 }
 
 int main() {
+    printf("Hello World!\n");
     hello();
+#ifdef defined(__linux__) || defined(__APPLE__)
     setenv("TZ", "Etc/GMT-8", 1);
     tzset();
-    test_get_current_time();
-    test_get_time_string();
-    test_get_time_by_string();
-    test_get_timestamp_by_time();
-    test_get_time_by_timestamp();
-    test_get_start_time();
+#endif
+     test_get_current_time();
+     test_get_time_string();
+     test_get_time_by_string();
+     test_get_timestamp_by_time();
+     test_get_time_by_timestamp();
+     test_get_start_time();
     return 0;
 }
