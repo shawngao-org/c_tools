@@ -49,3 +49,28 @@ struct tm *get_time_by_timestamp(long timestamp) {
     safe_localtime(&timestamp, buf);
     return buf;
 }
+
+struct tm *get_start_time(struct tm *time, char type) {
+    if (time == NULL) {
+        return NULL;
+    }
+    switch (type) {
+        case 'M': {
+            time->tm_mon = 0;
+        }
+        case 'D': {
+            time->tm_mday = 1;
+        }
+        case 'H': {
+            time->tm_hour = 0;
+        }
+        case 'm': {
+            time->tm_min = 0;
+            time->tm_sec = 0;
+            break;
+        }
+        default:
+            return NULL;
+    }
+    return time;
+}

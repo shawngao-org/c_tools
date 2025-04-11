@@ -12,5 +12,6 @@ char* get_time_string(const struct tm *);
 struct tm *get_time_by_string(char *);
 long get_timestamp_by_time(struct tm *);
 struct tm *get_time_by_timestamp(long);
+struct tm *get_start_time(struct tm *time, char type);
 
 #endif //TOOLS_TIME_TOOLS_H
