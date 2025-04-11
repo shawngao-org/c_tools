@@ -14,23 +14,9 @@ cmake ..
 echo -e "\033[0;33mMaking..."
 make -j 2
 if [ $? -eq 0 ]; then
-  echo -e "\033[0;32mBuild Successful!"
+  echo -e "\033[0;32mBuild Successful!\033[0m"
 else
-  echo -e "\033[0;31mBuild Failed!"
+  echo -e "\033[0;31mBuild Failed!\033[0m"
   exit 1
 fi
-echo -e "\033[0;38mDo you want to install this lib? (Y/N) [default in 5s: Y]: "
-read -t 5 REPLY
-if [ -z "$age" ]; then
-  REPLY=Y
-fi
-if [ $REPLY = Y ] || [ $REPLY = y ]; then
-  echo -e "\033[0;33mInstalling..."
-  make install
-  if [ $? -eq 0 ]; then
-    echo -e "\033[0;32mInstall Successful!\033[0m"
-  else
-    echo -e "\033[0;31mInstall Failed!\033[0m"
-    exit 1
-  fi
-fi
+./tools_debug
