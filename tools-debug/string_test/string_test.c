@@ -11,9 +11,9 @@
 
 void test_str_len() {
     printf("\nTest: safe_strlen()\n");
-    char *str = "ABCD DCBA";
-    unsigned long target_len = 9;
-    unsigned long len = safe_strlen(str);
+    const char *str = "ABCD DCBA";
+    const unsigned long target_len = 9;
+    const unsigned long len = safe_strlen(str);
     printf("The target length is: %ld\n", target_len);
     printf("The length of the string is: %ld\n", len);
     if (len != target_len) {
@@ -37,7 +37,7 @@ void test_safe_str_cpy() {
 
 void test_safe_str_n_cpy() {
     printf("\nTest: safe_str_n_cpy()\n");
-    char *str1 = "A B C D ";
+    const char *str1 = "A B C D ";
     char *target_str = "A B";
     char *dest = (char *) malloc(sizeof(char) * (safe_strlen(str1)));
     safe_str_n_cpy(dest, str1, 3);
@@ -49,9 +49,32 @@ void test_safe_str_n_cpy() {
     }
 }
 
+void test_parse_int() {
+    printf("\nTest: parse_int()\n");
+    const char *str = "12345";
+    const int num = 12345;
+    const int result = parse_int(&str, 6);
+    printf("The target result is: %d\n", num);
+    printf("The result is: %d\n", result);
+    if (result != num) {
+        fprintf(stderr, "Error: parse_int() results don\'t match.");
+        exit(1);
+    }
+    const char *n_str = "-12345";
+    const int n_num = -12345;
+    const int n_result = parse_int(&n_str, 6);
+    printf("The target result is: %d\n", n_num);
+    printf("The result is: %d\n", n_result);
+    if (n_result != num) {
+        fprintf(stderr, "Error: parse_int() results don\'t match.");
+        exit(1);
+    }
+}
+
 int string_test() {
     test_str_len();
     test_safe_str_cpy();
     test_safe_str_n_cpy();
+    test_parse_int();
     return 0;
 }
