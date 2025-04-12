@@ -6,11 +6,24 @@
 
 ## Build & Run Debug program
 
+#### Linux
+
 ```shell
 # Build and install the library to the system lib path.
 ./build.sh
 # Run the debug program.
 ./run-debug.sh
+```
+
+#### Windows
+
+> This script needs to be run as an administrator.
+
+```shell
+# Build and install the library to the system lib path.
+./build.bat
+# Run the debug program.
+./run-debug.bat
 ```
 
 ## License
