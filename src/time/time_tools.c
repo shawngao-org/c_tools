@@ -245,10 +245,6 @@ int timestamp_printf(const char *format, ...) {
             i += 2;
         }
     }
-    if (final_len <= 0) {
-        fprintf(stderr, "Error: timestamp_printf: format is empty.\n");
-        return 1;
-    }
     char *buffer = (char *) malloc(sizeof(char) * final_len);
     if (buffer == NULL) {
         return -1;

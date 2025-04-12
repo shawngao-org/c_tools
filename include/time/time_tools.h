@@ -6,13 +6,13 @@
 #define TOOLS_TIME_TOOLS_H
 #include <time.h>
 
-typedef struct timestamp {
+struct timestamp {
 #ifdef _WIN32
     long long val;
 #else
     long val;
 #endif
-} timestamp;
+};
 
 struct tm* safe_localtime(const time_t *time_ptr, struct tm *buf);
 struct tm *get_current_time(void);
