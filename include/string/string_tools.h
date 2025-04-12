@@ -11,4 +11,6 @@ void safe_str_cpy(char *dest, const char *src);
 
 void safe_str_n_cpy(char *dest, const char *src, unsigned long n);
 
+int parse_int(const char **s, int width);
+
 #endif //TOOLS_STRING_TOOLS_H

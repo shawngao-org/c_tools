@@ -105,10 +105,34 @@ struct tm *get_end_time(struct tm *time, char type);
  */
 int timestamp_printf(const char *format, ...);
 
+/**
+ * Get string length
+ * @param str string
+ * @return length
+ */
 unsigned long safe_strlen(const char *str);
 
+/**
+ * Copy src string to dest string
+ * @param dest dest string
+ * @param src src string
+ */
 void safe_str_cpy(char *dest, const char *src);
 
+/**
+ *
+ * @param dest dest string
+ * @param src src string
+ * @param n length
+ */
 void safe_str_n_cpy(char *dest, const char *src, unsigned long n);
+
+/**
+ * Parse string to int number
+ * @param s string
+ * @param width length or width
+ * @return number
+ */
+int parse_int(const char **s, int width);
 
 #endif //TOOLS_TOOLS_H
