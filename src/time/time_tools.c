@@ -269,5 +269,6 @@ int timestamp_printf(const char *format, ...) {
     va_start(args, format);
     int result = vprintf(buffer, args);
     va_end(args);
+    free(buffer);
     return result;
 }
