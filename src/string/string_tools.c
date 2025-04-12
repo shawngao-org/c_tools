@@ -33,10 +33,12 @@ void safe_str_n_cpy(char *dest, const char *src, unsigned long n) {
     if (src == NULL || dest == NULL || src[0] == '\0') {
         return;
     }
-    for (int i = 0; i < n; ++i) {
+    int i = 0;
+    for (; i < n; ++i) {
         if (src[i] == '\0') {
             break;
         }
         dest[i] = src[i];
     }
+    dest[i] = '\0';
 }
