@@ -19,7 +19,14 @@ else
   echo -e "\033[0;31mBuild Failed!\033[0m"
   exit 1
 fi
-strace -f ./tools_debug
+
+system=`uname`
+if [ "$system" != "Darwin" ]; then
+  strace -f ./tools_debug
+else
+  ./tools_debug
+fi
+
 if [ $? -eq 0 ]; then
   echo -e "\033[0;32mTests Successful!\033[0m"
 else
