@@ -20,7 +20,9 @@ jobs:
           mkdir $HOME/.sonar
           curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{ secrets.SONAR_HOST_URL }}/static/cpp/build-wrapper-linux-x86.zip
           unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
-          $HOME/.sonar/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output ./build.sh && ./run-debug.sh
+          ./build.sh
+          ASAN_OPTIONS=detect_leaks=1 ./run-debug.sh
+          $HOME/.sonar/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
