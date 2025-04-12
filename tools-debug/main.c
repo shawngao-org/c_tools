@@ -50,16 +50,16 @@ void test_get_timestamp_by_time() {
     const long original_ts = 1735660800;
     char *time_string = "2025-01-01 00:00:00";
     struct tm *time = get_time_by_string(time_string);
-    const long long timestamp = get_timestamp_by_time(time);
-    const int n = timestamp != 0;
+    const struct timestamp *ts = get_timestamp_by_time(time);
+    const int n = ts->val != 0;
     printf("Current timestamp is not zero: %d\n", n);
-    printf("Current timestamp: %lld\n", timestamp);
+    timestamp_printf("Current timestamp: %ts\n", ts->val);
     printf("Original timestamp: %ld\n", original_ts);
     if (!n) {
         fprintf(stderr, "Error: get_timestamp_by_time() returned NULL.\n");
         exit(1);
     }
-    if (timestamp != original_ts) {
+    if (ts->val != original_ts) {
         fprintf(stderr, "Error: get_timestamp_by_time() results don\'t match.");
         exit(1);
     }
@@ -69,13 +69,13 @@ void test_get_time_by_timestamp() {
     printf("\nTest: get_time_by_timestamp()\n");
     struct tm *original_t = get_current_time();
     printf("Original time string: %s\n", get_time_string(original_t));
-    const long long timestamp = get_timestamp_by_time(original_t);
-    printf("Original timestamp: %lld\n", timestamp);
-    struct tm *time = get_time_by_timestamp(timestamp);
+    const struct timestamp *ts = get_timestamp_by_time(original_t);
+    timestamp_printf("Original timestamp: %ts\n", ts->val);
+    struct tm *time = get_time_by_timestamp(ts);
     const int n = time != NULL;
     printf("Current time is not null: %d\n", n);
     printf("Current time string: %s\n", get_time_string(time));
-    printf("Current timestamp: %lld\n", get_timestamp_by_time(time));
+    timestamp_printf("Current timestamp: %ts\n", get_timestamp_by_time(time)->val);
     if (!n) {
         fprintf(stderr, "Error: get_time_by_timestamp() returned NULL.\n");
         exit(1);

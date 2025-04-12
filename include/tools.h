@@ -3,6 +3,14 @@
 
 #include <time.h>
 
+struct timestamp {
+#ifdef _WIN32
+    long long val;
+#else
+    long val;
+#endif
+};
+
 void hello(void);
 
 /**
@@ -44,7 +52,7 @@ struct tm *get_time_by_string(char * time_string);
  * @param tm struct tm ptr
  * @return seconds timestamp
  */
-long long get_timestamp_by_time(struct tm * tm);
+struct timestamp *get_timestamp_by_time(struct tm * tm);
 
 /**
  * Get struct tm ptr by timestamp
@@ -53,7 +61,7 @@ long long get_timestamp_by_time(struct tm * tm);
  * @param timestamp seconds timestamp
  * @return struct tm ptr
  */
-struct tm *get_time_by_timestamp(long long timestamp);
+struct tm *get_time_by_timestamp(const struct timestamp *timestamp);
 
 /**
  * Get start time by struct tm ptr and type
@@ -62,5 +70,16 @@ struct tm *get_time_by_timestamp(long long timestamp);
  * @return struct tm ptr
  */
 struct tm *get_start_time(struct tm *time, char type);
+
+/**
+ * Print timestamp, base on printf\n
+ * add new format: %ts\n
+ * %ts is long long number in Windows and long number in Linux\n
+ * Usage: timestamp_printf("Timestamp: %ts\\n", timestamp);
+ * @param format printf format
+ * @param ... printf params
+ * @return result
+ */
+int timestamp_printf(const char *format, ...);
 
 #endif //TOOLS_TOOLS_H

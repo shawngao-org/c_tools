@@ -6,9 +6,10 @@
 
 #include <ctype.h>
 #include <time.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 struct tm* safe_localtime(const time_t *time_ptr, struct tm *buf) {
     if (buf == NULL) {
@@ -112,13 +113,15 @@ struct tm *get_time_by_string(char *time_string) {
     return time;
 }
 
-long long get_timestamp_by_time(struct tm *time) {
-    return mktime(time);
+struct timestamp *get_timestamp_by_time(struct tm *time) {
+    struct timestamp *timestamp = (struct timestamp *) malloc(sizeof(struct timestamp));
+    timestamp->val = mktime(time);
+    return timestamp;
 }
 
-struct tm *get_time_by_timestamp(const long long timestamp) {
+struct tm *get_time_by_timestamp(const struct timestamp *timestamp) {
     struct tm *buf = (struct tm *) malloc(sizeof(struct tm));
-    safe_localtime(&timestamp, buf);
+    safe_localtime(&timestamp->val, buf);
     return buf;
 }
 
@@ -157,4 +160,52 @@ struct tm *get_start_time(struct tm *time, char type) {
             return NULL;
     }
     return time;
+}
+
+int timestamp_printf(const char *format, ...) {
+    va_list args;
+#ifdef _WIN32
+    char *lld_fmt = "%lld";
+#endif
+    char *ld_fmt = "%ld";
+    unsigned long format_len = strlen(format);
+    int ts_cnt = 0;
+    unsigned long final_len = format_len;
+    for (int i = 0; i < format_len; ++i) {
+        if (format[i] == '%' && format[i + 1] == 't' && format[i + 2] == 's') {
+#ifdef _WIN32
+            // Windows timestamp is long long, so we need to replace %ts with %lld, and length of %lld is 4, length of %ts is 3.
+            final_len = final_len + strlen(lld_fmt) - strlen(ts_fmt);
+#endif
+            // Linux timestamp is long, so we need to replace %ts with %ld, and length of %ld equals length of %ts.
+            ++ts_cnt;
+            i += 2;
+        }
+    }
+    char *buffer = (char *) malloc(sizeof(char) * final_len);
+    if (buffer == NULL) {
+        return -1;
+    }
+    buffer[0] = '\0';
+    if (ts_cnt == 0) {
+        strcpy(buffer, format);
+    }
+    for (int i = 0; i < format_len; ++i) {
+        if (format[i] == '%' && format[i + 1] == 't' && format[i + 2] == 's') {
+#ifdef _WIN32
+            strcat(buffer, lld_fmt);
+#else
+            strcat(buffer, ld_fmt);
+#endif
+            i += 2;
+        } else {
+            char tmp[2] = {format[i], '\0'};
+            strcat(buffer, tmp);
+        }
+    }
+    va_start(args, format);
+    int result = vprintf(buffer, args);
+    va_end(args);
+    free(buffer);
+    return result;
 }
