@@ -52,13 +52,10 @@ void win_strptime(const char *s, const char *format, struct tm *tm) {
         return;
     }
     memset(tm, 0, sizeof(struct tm));
-    if (tm == NULL) return;
     errno = 0;
     while (*format) {
         if (isspace(*format)) {
-            while (isspace(*s)) {
-                s++;
-            }
+            while (isspace(*s)) s++;
             format++;
             continue;
         }
@@ -68,24 +65,22 @@ void win_strptime(const char *s, const char *format, struct tm *tm) {
                 return;
             }
             if (*format == 'Y') {
-                if (strtol(s, "%4d", tm->tm_year) != 1) return;
-                tm->tm_year -= 1900;
+                tm->tm_year = parse_int(&s, 4) - 1900;
                 while (isdigit(*s)) s++;
             } else if (*format == 'm') {
-                if (strtol(s, "%2d", tm->tm_mon) != 1) return;
-                tm->tm_mon -= 1;
+                tm->tm_mon = parse_int(&s, 2) - 1;
                 while (isdigit(*s)) s++;
             } else if (*format == 'd') {
-                if (strtol(s, "%2d", tm->tm_mday) != 1) return;
+                tm->tm_mday = parse_int(&s, 2);
                 while (isdigit(*s)) s++;
             } else if (*format == 'H') {
-                if (strtol(s, "%2d", tm->tm_hour) != 1) return;
+                tm->tm_hour = parse_int(&s, 2);
                 while (isdigit(*s)) s++;
             } else if (*format == 'M') {
-                if (strtol(s, "%2d", tm->tm_min) != 1) return;
+                tm->tm_min = parse_int(&s, 2);
                 while (isdigit(*s)) s++;
             } else if (*format == 'S') {
-                if (strtol(s, "%2d", tm->tm_sec) != 1) return;
+                tm->tm_sec = parse_int(&s, 2);
                 while (isdigit(*s)) s++;
             } else if (*format == '-') {
                 if (*s != '-') return;
