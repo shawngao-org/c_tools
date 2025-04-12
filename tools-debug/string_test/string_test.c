@@ -65,7 +65,7 @@ void test_parse_int() {
     const int n_result = parse_int(&n_str, 6);
     printf("The target result is: %d\n", n_num);
     printf("The result is: %d\n", n_result);
-    if (n_result != num) {
+    if (n_result != n_num) {
         fprintf(stderr, "Error: parse_int() results don\'t match.");
         exit(1);
     }
