@@ -4,7 +4,7 @@ project(tools C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-file(GLOB_RECURSE SOURCES "src/*.c" "include/*.h" "src/time/*.c" "include/time/*.h")
+file(GLOB_RECURSE SOURCES "src/*.c" "include/*.h" "src/time/*.c" "include/time/*.h" "src/string/*.c" "include/string/*.h")
 add_library(tools SHARED ${SOURCES})
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

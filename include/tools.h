@@ -3,6 +3,14 @@
 
 #include <time.h>
 
+struct timestamp {
+#ifdef _WIN32
+    long long val;
+#else
+    long val;
+#endif
+};
+
 void hello(void);
 
 /**
@@ -28,7 +36,7 @@ struct tm *get_current_time(void);
  * @param tm struct tm ptr
  * @return time string "yyyy-MM-dd hh-mm-ss"
  */
-char* get_time_string(const struct tm *);
+char* get_time_string(const struct tm * tm);
 
 /**
  * Get struct tm ptr by time string
@@ -37,14 +45,14 @@ char* get_time_string(const struct tm *);
  * @param time_string time string "yyyy-MM-dd hh-mm-ss"
  * @return struct tm ptr
  */
-struct tm *get_time_by_string(char *);
+struct tm *get_time_by_string(char * time_string);
 
 /**
  * Get timestamp by struct tm ptr
  * @param tm struct tm ptr
  * @return seconds timestamp
  */
-long get_timestamp_by_time(struct tm *);
+struct timestamp *get_timestamp_by_time(struct tm * tm);
 
 /**
  * Get struct tm ptr by timestamp
@@ -53,7 +61,7 @@ long get_timestamp_by_time(struct tm *);
  * @param timestamp seconds timestamp
  * @return struct tm ptr
  */
-struct tm *get_time_by_timestamp(long);
+struct tm *get_time_by_timestamp(const struct timestamp *timestamp);
 
 /**
  * Get start time by struct tm ptr and type
@@ -62,5 +70,69 @@ struct tm *get_time_by_timestamp(long);
  * @return struct tm ptr
  */
 struct tm *get_start_time(struct tm *time, char type);
+
+/**
+ * Check whether the year is a leap year
+ * @param year year
+ * @return 1: leap year, 0: not leap year
+ */
+int is_leap_year(int year);
+
+/**
+ * Get days in month by year and month
+ * @param year year
+ * @param month month
+ * @return days in month
+ */
+int get_days_in_month(int year, int month);
+
+/**
+ * Get end time by struct tm ptr and type
+ * @param time struct tm ptr
+ * @param type m: minute, H: hour D: day, M: month
+ * @return struct tm ptr
+ */
+struct tm *get_end_time(struct tm *time, char type);
+
+/**
+ * Print timestamp, base on printf\n
+ * add new format: %ts\n
+ * %ts is long long number in Windows and long number in Linux\n
+ * Usage: timestamp_printf("Timestamp: %ts\\n", timestamp);
+ * @param format printf format
+ * @param ... printf params
+ * @return result
+ */
+int timestamp_printf(const char *format, ...);
+
+/**
+ * Get string length
+ * @param str string
+ * @return length
+ */
+unsigned long safe_strlen(const char *str);
+
+/**
+ * Copy src string to dest string
+ * @param dest dest string
+ * @param src src string
+ */
+void safe_str_cpy(char *dest, const char *src);
+
+/**
+ *
+ * @param dest dest string
+ * @param src src string
+ * @param n length
+ */
+void safe_str_n_cpy(char *dest, const char *src, unsigned long n);
+
+/**
+ * Parse string to int number
+ * @param s string
+ * @param width length or width
+ * @return number
+ */
+int parse_int(const char **s, int width);
 
 #endif //TOOLS_TOOLS_H
