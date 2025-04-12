@@ -105,18 +105,69 @@ void test_get_start_time() {
     }
 }
 
+void test_is_leap_year() {
+    printf("\nTest: is_leap_year()\n");
+    if (is_leap_year(2025) != 0) {
+        fprintf(stderr, "Error: is_leap_year() results don\'t match.");
+        exit(1);
+    } else {
+        printf("2025 is not a leap year.\n");
+    }
+    if (is_leap_year(2024) != 1) {
+        fprintf(stderr, "Error: is_leap_year() results don\'t match.");
+        exit(1);
+    } else {
+        printf("2024 is a leap year.\n");
+    }
+}
+
+void test_get_days_in_month() {
+    printf("\nTest: get_days_in_month()\n");
+    if (get_days_in_month(2025, 2) != 28) {
+        fprintf(stderr, "Error: get_days_in_month() results don\'t match.");
+        exit(1);
+    } else {
+        printf("2025-02 has 28 days.\n");
+    }
+}
+
+void test_get_end_time() {
+    printf("\nTest: get_end_time()\n");
+    char *time_string = "2025-05-10 07:30:50";
+    char *target_string = "2025-12-31 23:59:59";
+    const char type = 'M';
+    struct tm *time = get_time_by_string(time_string);
+    const struct tm *end_time = get_end_time(time, type);
+    const int n = end_time != NULL;
+    printf("Start time is not null: %d\n", end_time != NULL);
+    printf("Start time type: %c\n", type);
+    printf("Original time string: %s\n", time_string);
+    printf("Start time string: %s\n", get_time_string(end_time));
+    printf("Target time string: %s\n", target_string);
+    if (!n) {
+        fprintf(stderr, "Error: get_start_time() returned NULL.\n");
+        exit(1);
+    }
+    if (strcmp(get_time_string(end_time), target_string) != 0) {
+        fprintf(stderr, "Error: get_start_time() results don\'t match.");
+        exit(1);
+    }
+}
+
 int main() {
-    printf("Hello World!\n");
     hello();
-#ifdef defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__)
     setenv("TZ", "Etc/GMT-8", 1);
     tzset();
 #endif
-     test_get_current_time();
-     test_get_time_string();
-     test_get_time_by_string();
-     test_get_timestamp_by_time();
-     test_get_time_by_timestamp();
-     test_get_start_time();
+    test_get_current_time();
+    test_get_time_string();
+    test_get_time_by_string();
+    test_get_timestamp_by_time();
+    test_get_time_by_timestamp();
+    test_get_start_time();
+    test_is_leap_year();
+    test_get_days_in_month();
+    test_get_end_time();
     return 0;
 }

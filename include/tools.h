@@ -72,6 +72,29 @@ struct tm *get_time_by_timestamp(const struct timestamp *timestamp);
 struct tm *get_start_time(struct tm *time, char type);
 
 /**
+ * Check whether the year is a leap year
+ * @param year year
+ * @return 1: leap year, 0: not leap year
+ */
+int is_leap_year(int year);
+
+/**
+ * Get days in month by year and month
+ * @param year year
+ * @param month month
+ * @return days in month
+ */
+int get_days_in_month(int year, int month);
+
+/**
+ * Get end time by struct tm ptr and type
+ * @param time struct tm ptr
+ * @param type m: minute, H: hour D: day, M: month
+ * @return struct tm ptr
+ */
+struct tm *get_end_time(struct tm *time, char type);
+
+/**
  * Print timestamp, base on printf\n
  * add new format: %ts\n
  * %ts is long long number in Windows and long number in Linux\n

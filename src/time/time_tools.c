@@ -162,6 +162,69 @@ struct tm *get_start_time(struct tm *time, char type) {
     return time;
 }
 
+int is_leap_year(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+int get_days_in_month(int year, int month) {
+    switch (month) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            return 31;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            return 30;
+        case 2:
+            return is_leap_year(year) ? 29 : 28;
+        default:
+            return 1;
+    }
+}
+
+struct tm *get_end_time(struct tm *time, char type) {
+    if (time == NULL) {
+        return NULL;
+    }
+    switch (type) {
+        case 'M': {
+            time->tm_mon = 11;
+            time->tm_mday = get_days_in_month(time->tm_year + 1900, time->tm_mon + 1);
+            time->tm_hour = 23;
+            time->tm_min = 59;
+            time->tm_sec = 59;
+            break;
+        }
+        case 'D': {
+            time->tm_mday = get_days_in_month(time->tm_year + 1900, time->tm_mon + 1);
+            time->tm_hour = 23;
+            time->tm_min = 59;
+            time->tm_sec = 59;
+            break;
+        }
+        case 'H': {
+            time->tm_hour = 23;
+            time->tm_min = 59;
+            time->tm_sec = 59;
+            break;
+        }
+        case 'm': {
+            time->tm_min = 59;
+            time->tm_sec = 59;
+            break;
+        }
+        default:
+            return NULL;
+    }
+    return time;
+}
+
 int timestamp_printf(const char *format, ...) {
     va_list args;
 #ifdef _WIN32
