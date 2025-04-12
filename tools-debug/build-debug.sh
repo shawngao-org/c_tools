@@ -19,7 +19,7 @@ else
   echo -e "\033[0;31mBuild Failed!\033[0m"
   exit 1
 fi
-./tools_debug
+strace -f ./tools_debug
 if [ $? -eq 0 ]; then
   echo -e "\033[0;32mTests Successful!\033[0m"
 else
