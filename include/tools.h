@@ -3,13 +3,13 @@
 
 #include <time.h>
 
-struct timestamp {
+typedef struct timestamp {
 #ifdef _WIN32
     long long val;
 #else
     long val;
 #endif
-};
+} timestamp;
 
 void hello(void);
 
