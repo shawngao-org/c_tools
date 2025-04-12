@@ -105,4 +105,10 @@ struct tm *get_end_time(struct tm *time, char type);
  */
 int timestamp_printf(const char *format, ...);
 
+unsigned long safe_strlen(const char *str);
+
+void safe_str_cpy(char *dest, const char *src);
+
+void safe_str_n_cpy(char *dest, const char *src, unsigned long n);
+
 #endif //TOOLS_TOOLS_H

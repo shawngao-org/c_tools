@@ -3,6 +3,7 @@
 //
 
 #include "../../include/time/time_tools.h"
+#include "../../include/string/string_tools.h"
 
 #include <ctype.h>
 #include <time.h>
@@ -235,21 +236,21 @@ struct tm *get_end_time(struct tm *time, char type) {
 }
 
 char *replace_ts_token(const char *format) {
-    size_t len = strlen(format);
+    size_t len = safe_strlen(format);
     char *buffer = malloc(len * 2);
     if (!buffer) return NULL;
     const char *curr = format;
     char *dest = buffer;
     while ((curr = strstr(curr, "%ts"))) {
         size_t before = curr - format;
-        strncpy(dest, format, before);
+        safe_str_n_cpy(dest, format, before);
         dest += before;
-        strcpy(dest, TIMESTAMP_TOKEN_FMT);
-        dest += strlen(TIMESTAMP_TOKEN_FMT);
+        safe_str_cpy(dest, TIMESTAMP_TOKEN_FMT);
+        dest += safe_strlen(TIMESTAMP_TOKEN_FMT);
         curr += 3;
         format = curr;
     }
-    strcpy(dest, format);
+    safe_str_cpy(dest, format);
     return buffer;
 }
 
