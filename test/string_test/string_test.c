@@ -4,6 +4,7 @@
 
 #include "string_test.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,10 +17,7 @@ void test_str_len() {
     const unsigned long len = safe_strlen(str);
     printf("The target length is: %ld\n", target_len);
     printf("The length of the string is: %ld\n", len);
-    if (len != target_len) {
-        fprintf(stderr, "Error: The length of the string is not correct.\n");
-        exit(1);
-    }
+    assert(len == target_len);
 }
 
 void test_safe_str_cpy() {
@@ -29,10 +27,7 @@ void test_safe_str_cpy() {
     safe_str_cpy(dest, str1);
     printf("The target result is: %s\n", str1);
     printf("The result is: %s\n", dest);
-    if (strcmp(str1, dest) != 0) {
-        fprintf(stderr, "Error: safe_str_cpy() results don\'t match.");
-        exit(1);
-    }
+    assert(strcmp(str1, dest) == 0);
 }
 
 void test_safe_str_n_cpy() {
@@ -43,10 +38,7 @@ void test_safe_str_n_cpy() {
     safe_str_n_cpy(dest, str1, 3);
     printf("The target result is: %s\n", target_str);
     printf("The result is: %s\n", dest);
-    if (strcmp(target_str, dest) != 0) {
-        fprintf(stderr, "Error: safe_str_n_cpy() results don\'t match.");
-        exit(1);
-    }
+    assert(strcmp(target_str, dest) == 0);
 }
 
 void test_parse_int() {
@@ -56,19 +48,13 @@ void test_parse_int() {
     const int result = parse_int(&str, 6);
     printf("The target result is: %d\n", num);
     printf("The result is: %d\n", result);
-    if (result != num) {
-        fprintf(stderr, "Error: parse_int() results don\'t match.");
-        exit(1);
-    }
+    assert(result == num);
     const char *n_str = "-12345";
     const int n_num = -12345;
     const int n_result = parse_int(&n_str, 6);
     printf("The target result is: %d\n", n_num);
     printf("The result is: %d\n", n_result);
-    if (n_result != n_num) {
-        fprintf(stderr, "Error: parse_int() results don\'t match.");
-        exit(1);
-    }
+    assert(n_result == n_num);
 }
 
 int string_test() {

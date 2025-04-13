@@ -11,10 +11,8 @@
 #### Linux
 
 ```shell
-# Build and install the library to the system lib path.
+# Build and install the library and test.
 ./build.sh
-# Run the debug program.
-./run-debug.sh
 ```
 
 #### Windows
@@ -22,10 +20,8 @@
 > This script needs to be run as an administrator.
 
 ```shell
-# Build and install the library to the system lib path.
+# Build and install the library and test.
 ./build.bat
-# Run the debug program.
-./run-debug.bat
 ```
 
 ## License

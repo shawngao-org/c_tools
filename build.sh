@@ -1,40 +1,21 @@
 #!/bin/bash
 
 DIRECTORY="build"
-echo -e "\033[0;33mCheck if the $DIRECTORY directory exists..."
+echo -e "\033[0;33mCheck if the $DIRECTORY directory exists...\033[0m"
 if [ -d "$DIRECTORY" ]; then
-  echo -e "\033[0;34mThe $DIRECTORY directory already exists. Deleting $DIRECTORY directory..."
+  echo -e "\033[0;34mThe $DIRECTORY directory already exists. Deleting $DIRECTORY directory...\033[0m"
   rm -rf "$DIRECTORY"
 fi
-echo -e "\033[0;33mCreating directory and enter $DIRECTORY"
+echo -e "\033[0;33mCreating directory and enter $DIRECTORY\033[0m"
 mkdir "$DIRECTORY"
 cd "$DIRECTORY"
-echo -e "\033[0;33mCMaking..."
-cmake ..
-echo -e "\033[0;33mMaking..."
+echo -e "\033[0;33mCMaking...\033[0m"
+cmake -DENABLE_COVERAGE=ON ..
+echo -e "\033[0;33mMaking...\033[0m"
 make -j 2
 if [ $? -eq 0 ]; then
-  echo -e "\033[0;32mBuild Successful!"
+  echo -e "\033[0;32mBuild Successful!\033[0m"
 else
-  echo -e "\033[0;31mBuild Failed!"
+  echo -e "\033[0;31mBuild Failed!\033[0m"
   exit 1
-fi
-echo -e "\033[0;38mDo you want to install this lib to system? (Y/N) [default in 5s: Y]: "
-read -t 5 REPLY
-if [ -z "$REPLY" ]; then
-  REPLY="Y"
-fi
-if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
-  echo -e "\033[0;33mInstalling..."
-  sudo make install
-  system=`uname`
-  if [ "$system" != "Darwin" ]; then
-    sudo ldconfig
-  fi
-  if [ $? -eq 0 ]; then
-    echo -e "\033[0;32mInstall Successful!\033[0m"
-  else
-    echo -e "\033[0;31mInstall Failed!\033[0m"
-    exit 1
-  fi
 fi
