@@ -22,10 +22,11 @@ void test_get_time_string() {
     const struct tm *time = get_current_time();
     const char *time_string = get_time_string(time);
     const int n = time_string != NULL;
-    const int e = time_string[0] != '\0';
     printf("Current time string is not null: %d\n", n);
+    assert(n);
+    const int e = time_string[0] != '\0';
     printf("Current time string is not empty: %d\n", e);
-    assert(n && e);
+    assert(e);
 }
 
 void test_get_time_by_string() {
