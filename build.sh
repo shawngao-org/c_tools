@@ -2,7 +2,7 @@
 
 system=`uname`
 if [ "$system" != "Darwin" ]; then
-  apt install -y lcov
+  sudo apt install -y lcov
 fi
 DIRECTORY="build"
 echo -e "\033[0;33mCheck if the $DIRECTORY directory exists...\033[0m"
