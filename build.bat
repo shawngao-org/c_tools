@@ -19,27 +19,6 @@ if %errorlevel% equ 0 (
   echo Build Failed!
   exit /b 1
 )
-echo Do you want to install this lib to system? (Y/N) [default in 5s: Y]:
-set "REPLY="
-set /p "REPLY="
-
-(
-    echo Y
-    timeout /t 5 /nobreak >nul
-) | (
-    set /p "REPLY="
-)
-
-if "%REPLY%"=="" set "REPLY=Y"
-
-if /i "%REPLY%"=="Y" (
-  echo Installing...
-  mingw32-make install
-  copy libtools.dll "C:/Program Files (x86)/tools/lib/libtools.dll"
-  if %errorlevel% equ 0 (
-    echo Install Successful!
-  ) else (
-    echo Install Failed!
-    exit /b 1
-  )
-)
+.\test
+lcov -capture -directory . -output-file coverage.info
+genhtml coverage.info -output-directory coverage_html

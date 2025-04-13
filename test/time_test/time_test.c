@@ -87,11 +87,7 @@ void test_get_time_by_timestamp() {
     }
 }
 
-void test_get_start_time() {
-    printf("\nTest: get_start_time()\n");
-    char *time_string = "2025-05-10 07:30:50";
-    char *target_string = "2025-01-01 00:00:00";
-    const char type = 'M';
+void after_process_test_get_start_time(char *time_string, char *target_string, const char type) {
     struct tm *time = get_time_by_string(time_string);
     const struct tm *start_time = get_start_time(time, type);
     const int n = start_time != NULL;
@@ -108,6 +104,30 @@ void test_get_start_time() {
         fprintf(stderr, "Error: get_start_time() results don\'t match.");
         exit(1);
     }
+}
+
+void test_get_start_time() {
+    printf("\nTest: get_start_time()\n");
+    printf("test month\n");
+    char *time_string_m = "2025-05-10 07:30:50";
+    char *target_string_m = "2025-01-01 00:00:00";
+    const char type_m = 'M';
+    after_process_test_get_start_time(time_string_m, target_string_m, type_m);
+    printf("test day\n");
+    char *time_string_d = "2025-05-10 07:30:50";
+    char *target_string_d = "2025-05-01 00:00:00";
+    const char type_d = 'D';
+    after_process_test_get_start_time(time_string_d, target_string_d, type_d);
+    printf("test hour\n");
+    char *time_string_h = "2025-05-10 07:30:50";
+    char *target_string_h = "2025-05-10 00:00:00";
+    const char type_h = 'H';
+    after_process_test_get_start_time(time_string_h, target_string_h, type_h);
+    printf("test min\n");
+    char *time_string_min = "2025-05-10 07:30:50";
+    char *target_string_min = "2025-05-10 07:00:00";
+    const char type_min = 'm';
+    after_process_test_get_start_time(time_string_min, target_string_min, type_min);
 }
 
 void test_is_leap_year() {
