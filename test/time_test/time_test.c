@@ -3,6 +3,8 @@
 //
 
 #include "time_test.h"
+
+#include <assert.h>
 #include <stdio.h>
 #include <tools.h>
 #include <stdlib.h>
@@ -12,10 +14,7 @@ void test_get_current_time() {
     printf("\nTest: get_current_time()\n");
     const int b = get_current_time() != NULL;
     printf("Current time is not null: %d\n", b);
-    if (!b) {
-        fprintf(stderr, "Error: get_current_time() returned NULL.\n");
-        exit(1);
-    }
+    assert(b);
 }
 
 void test_get_time_string() {
@@ -26,10 +25,7 @@ void test_get_time_string() {
     const int e = time_string[0] != '\0';
     printf("Current time string is not null: %d\n", n);
     printf("Current time string is not empty: %d\n", e);
-    if (!n || !e) {
-        fprintf(stderr, "Error: get_time_string() returned NULL or Empty.\n");
-        exit(1);
-    }
+    assert(n && e);
 }
 
 void test_get_time_by_string() {
@@ -38,16 +34,10 @@ void test_get_time_by_string() {
     const struct tm *time = get_time_by_string(time_string);
     const int n = time != NULL;
     printf("Current time is not null: %d\n", n);
-    if (!n) {
-        fprintf(stderr, "Error: get_time_by_string() returned NULL.\n");
-        exit(1);
-    }
+    assert(n);
     char *time_string_converted = get_time_string(time);
     printf("Time string: %s\n", time_string_converted);
-    if (strcmp(time_string, time_string_converted) != 0) {
-        fprintf(stderr, "Error: get_time_by_string() results don\'t match.");
-        exit(1);
-    }
+    assert(strcmp(time_string, time_string_converted) == 0);
 }
 
 void test_get_timestamp_by_time() {
@@ -60,14 +50,8 @@ void test_get_timestamp_by_time() {
     printf("Current timestamp is not zero: %d\n", n);
     timestamp_printf("Current timestamp: %ts\n", ts->val);
     printf("Original timestamp: %ld\n", original_ts);
-    if (!n) {
-        fprintf(stderr, "Error: get_timestamp_by_time() returned NULL.\n");
-        exit(1);
-    }
-    if (ts->val != original_ts) {
-        fprintf(stderr, "Error: get_timestamp_by_time() results don\'t match.");
-        exit(1);
-    }
+    assert(n);
+    assert(ts->val == original_ts);
 }
 
 void test_get_time_by_timestamp() {
@@ -81,10 +65,7 @@ void test_get_time_by_timestamp() {
     printf("Current time is not null: %d\n", n);
     printf("Current time string: %s\n", get_time_string(time));
     timestamp_printf("Current timestamp: %ts\n", get_timestamp_by_time(time)->val);
-    if (!n) {
-        fprintf(stderr, "Error: get_time_by_timestamp() returned NULL.\n");
-        exit(1);
-    }
+    assert(n);
 }
 
 void after_process_test_get_start_time(char *time_string, char *target_string, const char type) {
@@ -96,14 +77,8 @@ void after_process_test_get_start_time(char *time_string, char *target_string, c
     printf("Original time string: %s\n", time_string);
     printf("Start time string: %s\n", get_time_string(start_time));
     printf("Target time string: %s\n", target_string);
-    if (!n) {
-        fprintf(stderr, "Error: get_start_time() returned NULL.\n");
-        exit(1);
-    }
-    if (strcmp(get_time_string(start_time), target_string) != 0) {
-        fprintf(stderr, "Error: get_start_time() results don\'t match.");
-        exit(1);
-    }
+    assert(n);
+    assert(n);
 }
 
 void test_get_start_time() {
@@ -132,28 +107,13 @@ void test_get_start_time() {
 
 void test_is_leap_year() {
     printf("\nTest: is_leap_year()\n");
-    if (is_leap_year(2025) != 0) {
-        fprintf(stderr, "Error: is_leap_year() results don\'t match.");
-        exit(1);
-    } else {
-        printf("2025 is not a leap year.\n");
-    }
-    if (is_leap_year(2024) != 1) {
-        fprintf(stderr, "Error: is_leap_year() results don\'t match.");
-        exit(1);
-    } else {
-        printf("2024 is a leap year.\n");
-    }
+    assert(is_leap_year(2025) == 0);
+    assert(is_leap_year(2024) == 1);
 }
 
 void test_get_days_in_month() {
     printf("\nTest: get_days_in_month()\n");
-    if (get_days_in_month(2025, 2) != 28) {
-        fprintf(stderr, "Error: get_days_in_month() results don\'t match.");
-        exit(1);
-    } else {
-        printf("2025-02 has 28 days.\n");
-    }
+    assert(get_days_in_month(2025, 2) == 28);
 }
 
 void test_get_end_time() {
@@ -169,14 +129,8 @@ void test_get_end_time() {
     printf("Original time string: %s\n", time_string);
     printf("Start time string: %s\n", get_time_string(end_time));
     printf("Target time string: %s\n", target_string);
-    if (!n) {
-        fprintf(stderr, "Error: get_start_time() returned NULL.\n");
-        exit(1);
-    }
-    if (strcmp(get_time_string(end_time), target_string) != 0) {
-        fprintf(stderr, "Error: get_start_time() results don\'t match.");
-        exit(1);
-    }
+    assert(n);
+    assert(strcmp(get_time_string(end_time), target_string) == 0);
 }
 
 int time_test() {
