@@ -1,6 +1,11 @@
 # C Tools
 
 [![Build](https://github.com/shawngao-org/c_tools/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/shawngao-org/c_tools/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=shawngao-org_c_tools&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=shawngao-org_c_tools)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=shawngao-org_c_tools&metric=bugs)](https://sonarcloud.io/summary/new_code?id=shawngao-org_c_tools)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=shawngao-org_c_tools&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=shawngao-org_c_tools)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=shawngao-org_c_tools&metric=coverage)](https://sonarcloud.io/summary/new_code?id=shawngao-org_c_tools)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=shawngao-org_c_tools&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=shawngao-org_c_tools)
 
 + This project is a C language tool library.
 + This project will encapsulate some commonly used tools and functions.
@@ -11,8 +16,8 @@
 #### Linux
 
 ```shell
-# Build and install the library and test.
 ./build.sh
+./test
 ```
 
 #### Windows
@@ -20,8 +25,8 @@
 > This script needs to be run as an administrator.
 
 ```shell
-# Build and install the library and test.
-./build.bat
+.\build.bat
+.\test.exe
 ```
 
 ## License
