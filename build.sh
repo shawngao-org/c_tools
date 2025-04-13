@@ -26,5 +26,3 @@ fi
 ./test
 echo -e "\033[0;33mGenerating coverage result...\033[0m"
 lcov -capture -directory . -output-file coverage.info
-echo -e "\033[0;33mGenerating coverage html report...\033[0m"
-genhtml coverage.info -output-directory coverage_html
