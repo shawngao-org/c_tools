@@ -7,7 +7,6 @@
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 unsigned long safe_strlen(const char *str) {
     if (str == NULL || str[0] == '\0')

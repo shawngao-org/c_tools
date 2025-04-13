@@ -20,6 +20,7 @@ else
   exit 1
 fi
 
+export DYLD_LIBRARY_PATH=/usr/local/lib
 system=`uname`
 if [ "$system" != "Darwin" ]; then
   strace -f ./tools_debug

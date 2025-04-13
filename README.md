@@ -1,5 +1,7 @@
 # C Tools
 
+[![Build](https://github.com/shawngao-org/c_tools/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/shawngao-org/c_tools/actions/workflows/build.yml)
+
 + This project is a C language tool library.
 + This project will encapsulate some commonly used tools and functions.
 + This project has not been developed yet and many functions need to be added.
