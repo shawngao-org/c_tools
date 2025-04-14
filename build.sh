@@ -19,3 +19,5 @@ else
   echo -e "\033[0;31mBuild Failed!\033[0m"
   exit 1
 fi
+echo -e "\033[0;33mTesting...\033[0m"
+make test

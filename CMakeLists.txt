@@ -43,14 +43,14 @@ elseif(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".dll") # Windows
 endif()
 
 # Debug and test execute
-add_executable(test
-        test/main.c
-        test/time_test/time_test.c
-        test/time_test/time_test.h
-        test/string_test/string_test.c
-        test/string_test/string_test.h)
+add_executable(tests
+        tests/main.c
+        tests/time_test/time_test.c
+        tests/time_test/time_test.h
+        tests/string_test/string_test.c
+        tests/string_test/string_test.h)
 
-target_link_libraries(test PRIVATE tools)
+target_link_libraries(tests PRIVATE tools)
 
 option(ENABLE_COVERAGE "Enable code coverage analysis" OFF)
 
@@ -60,3 +60,6 @@ if(ENABLE_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
 endif()
+
+enable_testing()
+add_test(NAME tests COMMAND tests)
