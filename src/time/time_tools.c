@@ -5,13 +5,6 @@
 #include "../../include/time/time_tools.h"
 #include "../../include/string/string_tools.h"
 
-#include <ctype.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
-
 #if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__)
 #include <errno.h>
 #endif
