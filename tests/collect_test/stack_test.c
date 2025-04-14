@@ -29,12 +29,11 @@ int stack_test() {
     push_stack(int_stack, &num6);
 
     printf("Integer Stack:\n");
-    int *peek_int = (int *) peek_stack(int_stack);
+    const int *peek_int = (int *) peek_stack(int_stack);
     if (peek_int) printf("Peek: %d\n", *peek_int);
 
-    int *popped_int;
     while (!is_empty_stack(int_stack)) {
-        popped_int = (int *) pop_stack(int_stack);
+        int* popped_int = (int*)pop_stack(int_stack);
         if (popped_int) {
             printf("Popped: %d\n", *popped_int);
             free(popped_int);
@@ -45,17 +44,17 @@ int stack_test() {
     printf("\n");
 
     struct stack *float_stack = create_stack(3, sizeof(float));
-    float f1 = 3.14f, f2 = 2.718f;
+    const float f1 = 3.14f;
+    const float f2 = 2.718f;
     push_stack(float_stack, &f1);
     push_stack(float_stack, &f2);
 
     printf("Float Stack:\n");
-    float *peek_float = (float *) peek_stack(float_stack);
+    const float *peek_float = (float *) peek_stack(float_stack);
     if (peek_float) printf("Peek: %.2f\n", *peek_float);
 
-    float *popped_float;
     while (!is_empty_stack(float_stack)) {
-        popped_float = (float *) pop_stack(float_stack);
+        float* popped_float = (float*)pop_stack(float_stack);
         if (popped_float) {
             printf("Popped: %.2f\n", *popped_float);
             free(popped_float);
@@ -75,9 +74,8 @@ int stack_test() {
     char **peek_str = (char **) peek_stack(string_stack);
     if (peek_str && *peek_str) printf("Peek: %s\n", *peek_str);
 
-    char **popped_str;
     while (!is_empty_stack(string_stack)) {
-        popped_str = (char **) pop_stack(string_stack);
+        char** popped_str = (char**)pop_stack(string_stack);
         if (popped_str && *popped_str) {
             printf("Popped: %s\n", *popped_str);
             free(*popped_str);
