@@ -3,6 +3,8 @@
 //
 
 #include "stack_test.h"
+
+#include <assert.h>
 #include <tools.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,10 +12,21 @@
 
 int stack_test() {
     struct stack *int_stack = create_stack(5, sizeof(int));
-    int num1 = 10, num2 = 20, num3 = 30;
+    const int num1 = 10;
+    const int num2 = 20;
+    const int num3 = 30;
+    const int num4 = 40;
+    const int num5 = 50;
+    const int num6 = 60;
     push_stack(int_stack, &num1);
     push_stack(int_stack, &num2);
     push_stack(int_stack, &num3);
+    push_stack(int_stack, &num4);
+    if (is_full_stack(int_stack)) {
+        resize_stack(int_stack);
+    }
+    push_stack(int_stack, &num5);
+    push_stack(int_stack, &num6);
 
     printf("Integer Stack:\n");
     int *peek_int = (int *) peek_stack(int_stack);
@@ -24,7 +37,7 @@ int stack_test() {
         popped_int = (int *) pop_stack(int_stack);
         if (popped_int) {
             printf("Popped: %d\n", *popped_int);
-            free(popped_int); // 释放 pop 返回的内存
+            free(popped_int);
         }
     }
     destroy_stack(int_stack);
@@ -73,5 +86,8 @@ int stack_test() {
     }
     destroy_stack(string_stack);
 
+    struct stack *null_stack = create_stack(2, sizeof(int));
+    assert(!peek_stack(null_stack));
+    assert(!pop_stack(null_stack));
     return 0;
 }
