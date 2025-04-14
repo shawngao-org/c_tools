@@ -3,7 +3,6 @@
 //
 
 #include "../../include/time/time_tools.h"
-#include "../../include/string/string_tools.h"
 
 #include <ctype.h>
 #include <time.h>

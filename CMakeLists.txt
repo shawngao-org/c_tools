@@ -4,7 +4,11 @@ project(tools C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-file(GLOB_RECURSE SOURCES "src/*.c" "include/*.h" "src/time/*.c" "include/time/*.h" "src/string/*.c" "include/string/*.h")
+file(GLOB_RECURSE SOURCES
+        "src/*.c" "include/*.h"
+        "src/time/*.c" "include/time/*.h"
+        "src/string/*.c" "include/string/*.h"
+        "src/collect/*.c" "include/collect/*.h")
 add_library(tools SHARED ${SOURCES})
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -48,7 +52,9 @@ add_executable(tests
         tests/time_test/time_test.c
         tests/time_test/time_test.h
         tests/string_test/string_test.c
-        tests/string_test/string_test.h)
+        tests/string_test/string_test.h
+        tests/collect_test/stack_test.c
+        tests/collect_test/stack_test.h)
 
 target_link_libraries(tests PRIVATE tools)
 

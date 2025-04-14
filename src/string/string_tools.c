@@ -9,8 +9,7 @@
 #include <stdio.h>
 
 unsigned long safe_strlen(const char *str) {
-    if (str == NULL || str[0] == '\0')
-    {
+    if (str == NULL || str[0] == '\0') {
         return 0;
     }
     int i = 0;

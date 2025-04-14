@@ -135,4 +135,66 @@ void safe_str_n_cpy(char *dest, const char *src, unsigned long n);
  */
 int parse_int(const char **s, int width);
 
+struct stack {
+    void **data;
+    int top;
+    int capacity;
+    size_t size;
+};
+
+/**
+ * Create stack
+ * @param init_capacity initial capacity
+ * @param size element size
+ * @return stack
+ */
+struct stack *create_stack(int init_capacity, size_t size);
+
+/**
+ * Check whether stack is empty
+ * @param stack stack
+ * @return 1: empty, 0: not empty
+ */
+int is_empty_stack(const struct stack *stack);
+
+/**
+ * Check whether stack is full
+ * @param stack stack
+ * @return 1: full, 0: not full
+ */
+int is_full_stack(const struct stack *stack);
+
+/**
+ * Resize stack
+ * @param stack stack
+ */
+void resize_stack(struct stack *stack);
+
+/**
+ * Push item to stack
+ * @param stack stack
+ * @param item data
+ */
+void push_stack(struct stack *stack, const void *item);
+
+/**
+ * Pop item from stack, this will remove item from stack
+ * @param stack stack
+ * @return data on top of stack
+ */
+void *pop_stack(struct stack *stack);
+
+/**
+ * Peek item from stack, but not remove
+ * @param stack stack
+ * @return data on top of stack
+ */
+void *peek_stack(const struct stack *stack);
+
+/**
+ * Destroy stack
+ * @param stack stack
+ */
+void destroy_stack(struct stack *stack);
+
 #endif //TOOLS_TOOLS_H
