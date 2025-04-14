@@ -77,7 +77,9 @@ void after_process_test_get_start_time(char *time_string, char *target_string, c
     assert(n);
     printf("Start time type: %c\n", type);
     printf("Original time string: %s\n", time_string);
-    printf("Start time string: %s\n", get_time_string(start_time));
+    char *start_time_string = get_time_string(start_time);
+    assert(start_time_string != NULL);
+    printf("End time string: %s\n", start_time_string);
     printf("Target time string: %s\n", target_string);
 }
 
@@ -109,11 +111,13 @@ void after_process_test_get_end_time(char *time_string, char *target_string, con
     struct tm *time = get_time_by_string(time_string);
     const struct tm *end_time = get_end_time(time, type);
     const int n = end_time != NULL;
-    printf("Start time is not null: %d\n", n);
+    printf("End time is not null: %d\n", n);
     assert(n);
-    printf("Start time type: %c\n", type);
+    printf("End time type: %c\n", type);
     printf("Original time string: %s\n", time_string);
-    printf("Start time string: %s\n", get_time_string(end_time));
+    char *end_time_string = get_time_string(end_time);
+    assert(end_time_string != NULL);
+    printf("End time string: %s\n", end_time_string);
     printf("Target time string: %s\n", target_string);
 }
 
