@@ -13,6 +13,10 @@
 
 ## Build & Run
 
+#### Requirements
+
++ CMake 3.27 or higher
+
 #### Linux & macOS
 
 ```shell
@@ -39,7 +43,7 @@
 
 #### Install library to system
 
-> This method is not support for Windows. Please see [Include library in your project](#include-library-in-your-project).
+> This method is not supported for Windows. Please see [Include library in your project](#include-library-in-your-project).
 
 ```shell
 cd build
