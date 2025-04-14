@@ -4,7 +4,11 @@
 
 #include "collect/stack_tools.h"
 
-struct stack *create_stack(int init_capacity, size_t size) {
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct stack *create_stack(const int init_capacity, size_t size) {
     struct stack *stack = (struct stack *) malloc(sizeof(struct stack));
     if (stack == NULL) {
         perror("Failed to allocate stack.");
@@ -22,11 +26,11 @@ struct stack *create_stack(int init_capacity, size_t size) {
     return stack;
 }
 
-int is_empty_stack(struct stack *stack) {
+int is_empty_stack(const struct stack *stack) {
     return stack->top == -1;
 }
 
-int is_full_stack(struct stack *stack) {
+int is_full_stack(const struct stack *stack) {
     return stack->top == stack->capacity - 1;
 }
 
@@ -62,7 +66,7 @@ void *pop_stack(struct stack *stack) {
     return item;
 }
 
-void *peek_stack(struct stack *stack) {
+void *peek_stack(const struct stack *stack) {
     if (is_empty_stack(stack)) {
         return NULL;
     }

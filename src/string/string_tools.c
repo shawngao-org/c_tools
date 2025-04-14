@@ -4,6 +4,10 @@
 
 #include "../../include/string/string_tools.h"
 
+#include <ctype.h>
+#include <math.h>
+#include <stdio.h>
+
 unsigned long safe_strlen(const char *str) {
     if (str == NULL || str[0] == '\0') {
         return 0;

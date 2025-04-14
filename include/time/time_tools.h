@@ -5,20 +5,7 @@
 #ifndef TOOLS_TIME_TOOLS_H
 #define TOOLS_TIME_TOOLS_H
 
-#include <ctype.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
-
-struct timestamp {
-#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
-    long long val;
-#else
-    long val;
-#endif
-};
+#include "tools.h"
 
 struct tm* safe_localtime(const time_t *time_ptr, struct tm *buf);
 struct tm *get_current_time(void);

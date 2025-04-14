@@ -155,14 +155,14 @@ struct stack *create_stack(int init_capacity, size_t size);
  * @param stack stack
  * @return 1: empty, 0: not empty
  */
-int is_empty_stack(struct stack *stack);
+int is_empty_stack(const struct stack *stack);
 
 /**
  * Check whether stack is full
  * @param stack stack
  * @return 1: full, 0: not full
  */
-int is_full_stack(struct stack *stack);
+int is_full_stack(const struct stack *stack);
 
 /**
  * Resize stack
@@ -189,7 +189,7 @@ void *pop_stack(struct stack *stack);
  * @param stack stack
  * @return data on top of stack
  */
-void *peek_stack(struct stack *stack);
+void *peek_stack(const struct stack *stack);
 
 /**
  * Destroy stack
