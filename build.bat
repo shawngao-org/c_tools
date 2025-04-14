@@ -19,6 +19,5 @@ if %errorlevel% equ 0 (
   echo Build Failed!
   exit /b 1
 )
-.\test
-lcov -capture -directory . -output-file coverage.info
-genhtml coverage.info -output-directory coverage_html
+echo Testing...
+mingw32-make.exe test

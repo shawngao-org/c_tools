@@ -13,20 +13,20 @@
 
 ## Build & Run Debug program
 
-#### Linux
+#### Linux & macOS
 
 ```shell
+# build and test
 ./build.sh
-./test
+./build/tests
 ```
 
 #### Windows
 
-> This script needs to be run as an administrator.
-
 ```shell
+# build and test
 .\build.bat
-.\test.exe
+.\build\tests.exe
 ```
 
 ## License
