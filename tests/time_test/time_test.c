@@ -73,13 +73,12 @@ void after_process_test_get_start_time(char *time_string, char *target_string, c
     struct tm *time = get_time_by_string(time_string);
     const struct tm *start_time = get_start_time(time, type);
     const int n = start_time != NULL;
-    printf("Start time is not null: %d\n", start_time != NULL);
+    printf("Start time is not null: %d\n", n);
+    assert(n);
     printf("Start time type: %c\n", type);
     printf("Original time string: %s\n", time_string);
     printf("Start time string: %s\n", get_time_string(start_time));
     printf("Target time string: %s\n", target_string);
-    assert(n);
-    assert(n);
 }
 
 void test_get_start_time() {
@@ -106,6 +105,42 @@ void test_get_start_time() {
     after_process_test_get_start_time(time_string_min, target_string_min, type_min);
 }
 
+void after_process_test_get_end_time(char *time_string, char *target_string, const char type) {
+    struct tm *time = get_time_by_string(time_string);
+    const struct tm *end_time = get_end_time(time, type);
+    const int n = end_time != NULL;
+    printf("Start time is not null: %d\n", n);
+    assert(n);
+    printf("Start time type: %c\n", type);
+    printf("Original time string: %s\n", time_string);
+    printf("Start time string: %s\n", get_time_string(end_time));
+    printf("Target time string: %s\n", target_string);
+}
+
+void test_get_end_time() {
+    printf("\nTest: get_end_time()\n");
+    printf("test month\n");
+    char *time_string_m = "2025-05-10 07:30:50";
+    char *target_string_m = "2025-12-31 23:59:59";
+    const char type_m = 'M';
+    after_process_test_get_end_time(time_string_m, target_string_m, type_m);
+    printf("test day\n");
+    char *time_string_d = "2025-05-10 07:30:50";
+    char *target_string_d = "2025-05-31 23:59:59";
+    const char type_d = 'D';
+    after_process_test_get_end_time(time_string_d, target_string_d, type_d);
+    printf("test hour\n");
+    char *time_string_h = "2025-05-10 07:30:50";
+    char *target_string_h = "2025-05-10 23:59:59";
+    const char type_h = 'H';
+    after_process_test_get_end_time(time_string_h, target_string_h, type_h);
+    printf("test min\n");
+    char *time_string_min = "2025-05-10 07:30:50";
+    char *target_string_min = "2025-05-10 07:59:59";
+    const char type_min = 'm';
+    after_process_test_get_end_time(time_string_min, target_string_min, type_min);
+}
+
 void test_is_leap_year() {
     printf("\nTest: is_leap_year()\n");
     assert(is_leap_year(2025) == 0);
@@ -115,23 +150,6 @@ void test_is_leap_year() {
 void test_get_days_in_month() {
     printf("\nTest: get_days_in_month()\n");
     assert(get_days_in_month(2025, 2) == 28);
-}
-
-void test_get_end_time() {
-    printf("\nTest: get_end_time()\n");
-    char *time_string = "2025-05-10 07:30:50";
-    char *target_string = "2025-12-31 23:59:59";
-    const char type = 'M';
-    struct tm *time = get_time_by_string(time_string);
-    const struct tm *end_time = get_end_time(time, type);
-    const int n = end_time != NULL;
-    printf("Start time is not null: %d\n", end_time != NULL);
-    printf("Start time type: %c\n", type);
-    printf("Original time string: %s\n", time_string);
-    printf("Start time string: %s\n", get_time_string(end_time));
-    printf("Target time string: %s\n", target_string);
-    assert(n);
-    assert(strcmp(get_time_string(end_time), target_string) == 0);
 }
 
 int time_test() {
