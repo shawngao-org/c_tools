@@ -158,7 +158,7 @@ void test_get_days_in_month() {
 
 int time_test() {
     hello();
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__CYGWIN__)
     setenv("TZ", "Etc/GMT-8", 1);
     tzset();
 #endif

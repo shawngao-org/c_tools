@@ -10,9 +10,12 @@ echo Creating directory and enter %DIRECTORY%
 mkdir "%DIRECTORY%"
 cd "%DIRECTORY%"
 echo CMaking...
-cmake -G "MinGW Makefiles" ..
+@REM If you are using MinGW, use the following command instead:
+@REM cmake -G "MinGW Makefiles" ..
+@REM If you are using Cygwin, use the following command instead:
+cmake -G "Unix Makefiles" ..
 echo Making...
-mingw32-make.exe -j 2
+make.exe -j 2
 if %errorlevel% equ 0 (
   echo Build Successful!
 ) else (
@@ -20,4 +23,4 @@ if %errorlevel% equ 0 (
   exit /b 1
 )
 echo Testing...
-mingw32-make.exe test
+make.exe test
