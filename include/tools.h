@@ -4,7 +4,7 @@
 #include <time.h>
 
 struct timestamp {
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
     long long val;
 #else
     long val;
