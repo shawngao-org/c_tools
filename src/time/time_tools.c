@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__)
+#include <errno.h>
+#endif
+
 #if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
 #define TIMESTAMP_TOKEN_FMT "%lld"
 #else
@@ -46,7 +50,7 @@ char *get_time_string(const struct tm *time) {
     return buffer;
 }
 
-#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__)
 void win_strptime(const char *s, const char *format, struct tm *tm) {
     if (tm == NULL) {
         return;
@@ -108,9 +112,9 @@ void win_strptime(const char *s, const char *format, struct tm *tm) {
 
 struct tm *get_time_by_string(char *time_string) {
     struct tm *time = (struct tm *) malloc(sizeof(struct tm));
-#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__)
     win_strptime(time_string, "%Y-%m-%d %H:%M:%S", time);
-#elif defined(__linux__) || defined(__APPLE__) || defined(__CYGWIN__)
+#elif defined(__linux__) || defined(__APPLE__)
     strptime(time_string, "%Y-%m-%d %H:%M:%S", time);
 #else
     return NULL;
