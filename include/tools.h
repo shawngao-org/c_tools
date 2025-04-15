@@ -197,4 +197,17 @@ void *peek_stack(const struct stack *stack);
  */
 void destroy_stack(struct stack *stack);
 
+struct list_node {
+    void *data;
+    struct list_node *prev;
+    struct list_node *next;
+};
+
+struct list_node *new_list_node(struct list_node *prev, struct list_node *next, void *data);
+void create_linked_list(struct list_node **head, void *fst_data);
+int is_empty_linked_list(struct list_node *head);
+void insert_linked_list_in_head(struct list_node **head, void *data);
+void insert_linked_list_in_tail(struct list_node **head, void *data);
+void destroy_linked_list(struct list_node **head);
+
 #endif //TOOLS_TOOLS_H
