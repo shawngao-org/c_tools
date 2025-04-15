@@ -139,6 +139,14 @@ This means you can use this library for development.
 + Create a pull request.
 + Wait for the maintainer to review your pull request.
 
+> Before submitting the code, please run the coverage check locally, 
+> and each item must be no less than `80%`.
+> ```shell
+> ./build.sh
+> # run coverage check
+> ./coverage.sh
+> ```
+
 ## License
 This project is licensed under the **MIT** License - see the LICENSE.md file for details.
 
