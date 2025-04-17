@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct stack *create_stack(const int init_capacity, size_t size) {
+struct stack *create_stack(const int init_capacity, const size_t size) {
     struct stack *stack = (struct stack *) malloc(sizeof(struct stack));
     if (stack == NULL) {
         perror("Failed to allocate stack.");

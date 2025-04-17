@@ -43,9 +43,9 @@ struct tm *get_current_time() {
     return buf;
 }
 
-char *get_time_string(const struct tm *time) {
+char *get_time_string(const struct tm *tm) {
     char *buffer = (char *) malloc(sizeof(char) * 20);
-    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", time);
+    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", tm);
     return buffer;
 }
 
@@ -121,9 +121,9 @@ struct tm *get_time_by_string(char *time_string) {
     return time;
 }
 
-struct timestamp *get_timestamp_by_time(struct tm *time) {
+struct timestamp *get_timestamp_by_time(struct tm *tm) {
     struct timestamp *timestamp = (struct timestamp *) malloc(sizeof(struct timestamp));
-    timestamp->val = mktime(time);
+    timestamp->val = mktime(tm);
     return timestamp;
 }
 
@@ -133,7 +133,7 @@ struct tm *get_time_by_timestamp(const struct timestamp *timestamp) {
     return buf;
 }
 
-struct tm *get_start_time(struct tm *time, char type) {
+struct tm *get_start_time(struct tm *time, const char type) {
     if (time == NULL) {
         return NULL;
     }
@@ -196,7 +196,7 @@ int get_days_in_month(const int year, const int month) {
     }
 }
 
-struct tm *get_end_time(struct tm *time, char type) {
+struct tm *get_end_time(struct tm *time, const char type) {
     if (time == NULL) {
         return NULL;
     }

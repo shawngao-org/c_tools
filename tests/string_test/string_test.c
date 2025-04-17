@@ -12,7 +12,7 @@
 #include <string.h>
 
 // Test case for safe_strlen
-static void test_safe_strlen(void **state) {
+static void test_safe_strlen() {
     assert_int_equal(safe_strlen(NULL), 0);
     assert_int_equal(safe_strlen(""), 0);
     assert_int_equal(safe_strlen("hello"), 5);
@@ -20,7 +20,7 @@ static void test_safe_strlen(void **state) {
 }
 
 // Test case for safe_str_cpy
-static void test_safe_str_cpy(void **state) {
+static void test_safe_str_cpy() {
     char dest[20];
     safe_str_cpy(dest, NULL);
     assert_string_equal(dest, ""); // Expect no change
@@ -39,7 +39,7 @@ static void test_safe_str_cpy(void **state) {
 }
 
 // Test case for safe_str_n_cpy
-static void test_safe_str_n_cpy(void **state) {
+static void test_safe_str_n_cpy() {
     char dest[20];
 
     safe_str_n_cpy(dest, NULL, 5);
@@ -65,7 +65,7 @@ static void test_safe_str_n_cpy(void **state) {
 }
 
 // Test case for parse_int
-static void test_parse_int(void **state) {
+static void test_parse_int() {
     const char *str1 = "123";
     assert_int_equal(parse_int(&str1, 3), 123);
 

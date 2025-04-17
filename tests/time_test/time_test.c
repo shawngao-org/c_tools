@@ -27,7 +27,7 @@ static int compare_tm(const struct tm *tm1, const struct tm *tm2) {
 }
 
 // Test case for safe_localtime (difficult to fully automate due to time dependency)
-static void test_safe_localtime(void **state) {
+static void test_safe_localtime() {
     time_t t = time(NULL);
     struct tm buf;
     struct tm *result = safe_localtime(&t, &buf);
@@ -36,14 +36,14 @@ static void test_safe_localtime(void **state) {
 }
 
 // Test case for get_current_time (difficult to fully automate due to time dependency)
-static void test_get_current_time(void **state) {
+static void test_get_current_time() {
     struct tm *current_time = get_current_time();
     assert_non_null(current_time);
     free(current_time);
 }
 
 // Test case for get_time_string (difficult to fully automate due to time dependency)
-static void test_get_time_string(void **state) {
+static void test_get_time_string() {
     const time_t t = 1678886400; // Example timestamp (March 15, 2023)
     struct tm buf;
     safe_localtime(&t, &buf);
@@ -54,7 +54,7 @@ static void test_get_time_string(void **state) {
 }
 
 // Test case for get_time_by_string
-static void test_get_time_by_string(void **state) {
+static void test_get_time_by_string() {
     char *time_string = "2025-04-17 10:30:45";
     struct tm *parsed_time = get_time_by_string(time_string);
     assert_non_null(parsed_time);
@@ -79,7 +79,7 @@ static void test_get_time_by_string(void **state) {
 }
 
 // Test case for get_timestamp_by_time
-static void test_get_timestamp_by_time(void **state) {
+static void test_get_timestamp_by_time() {
     struct tm time_val;
     memset(&time_val, 0, sizeof(struct tm));
     time_val.tm_year = 2025 - 1900;
@@ -97,7 +97,7 @@ static void test_get_timestamp_by_time(void **state) {
 }
 
 // Test case for get_time_by_timestamp
-static void test_get_time_by_timestamp(void **state) {
+static void test_get_time_by_timestamp() {
     struct timestamp ts;
     struct tm expected_time;
     memset(&expected_time, 0, sizeof(struct tm));
@@ -121,7 +121,7 @@ static void test_get_time_by_timestamp(void **state) {
 }
 
 // Test case for get_start_time
-static void test_get_start_time(void **state) {
+static void test_get_start_time() {
     struct tm time_val;
     memset(&time_val, 0, sizeof(struct tm));
     time_val.tm_year = 2025 - 1900;
@@ -174,7 +174,7 @@ static void test_get_start_time(void **state) {
 }
 
 // Test case for is_leap_year
-static void test_is_leap_year(void **state) {
+static void test_is_leap_year() {
     assert_true(is_leap_year(2000));
     assert_true(is_leap_year(2024));
     assert_false(is_leap_year(2100));
@@ -182,7 +182,7 @@ static void test_is_leap_year(void **state) {
 }
 
 // Test case for get_days_in_month
-static void test_get_days_in_month(void **state) {
+static void test_get_days_in_month() {
     assert_int_equal(get_days_in_month(2023, 0), 31); // January
     assert_int_equal(get_days_in_month(2024, 1), 29); // February (leap year)
     assert_int_equal(get_days_in_month(2023, 1), 28); // February (non-leap year)
@@ -194,7 +194,7 @@ static void test_get_days_in_month(void **state) {
 }
 
 // Test case for get_end_time
-static void test_get_end_time(void **state) {
+static void test_get_end_time() {
     struct tm time_val;
     memset(&time_val, 0, sizeof(struct tm));
     time_val.tm_year = 2025 - 1900;
@@ -247,7 +247,7 @@ static void test_get_end_time(void **state) {
 }
 
 // Test case for replace_ts_token
-static void test_replace_ts_token(void **state) {
+static void test_replace_ts_token() {
     const char *format1 = "%Y-%m-%d %H:%M:%S";
     char *replaced1 = replace_ts_token(format1);
     assert_non_null(replaced1);
@@ -274,7 +274,7 @@ static void test_replace_ts_token(void **state) {
 #endif
     free(replaced3);
 
-    char *format4 = "No token";
+    const char *format4 = "No token";
     char *replaced4 = replace_ts_token(format4);
     assert_non_null(replaced4);
     assert_string_equal(replaced4, "No token");
@@ -284,7 +284,7 @@ static void test_replace_ts_token(void **state) {
 }
 
 // Test case for timestamp_printf (difficult to fully automate due to output)
-static void test_timestamp_printf(void **state) {
+static void test_timestamp_printf() {
     // This test primarily checks if the function runs without crashing.
     // Verifying the output requires capturing stdout, which is more complex.
     int result = timestamp_printf("Current timestamp: %ts\n", (long long)time(NULL));

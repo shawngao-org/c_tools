@@ -11,13 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Helper function to compare integer data on the stack
-static int compare_int(const void *a, const void *b) {
-    return *(int *)a - *(int *)b;
-}
-
 // Test case for create_stack
-static void test_create_stack(void **state) {
+static void test_create_stack() {
     struct stack *stack = create_stack(5, sizeof(int));
     assert_non_null(stack);
     assert_int_equal(stack->capacity, 5);
@@ -29,10 +24,10 @@ static void test_create_stack(void **state) {
 }
 
 // Test case for is_empty_stack
-static void test_is_empty_stack(void **state) {
+static void test_is_empty_stack() {
     struct stack *stack = create_stack(5, sizeof(int));
     assert_true(is_empty_stack(stack));
-    int item = 10;
+    const int item = 10;
     push_stack(stack, &item);
     assert_false(is_empty_stack(stack));
     pop_stack(stack);
@@ -41,10 +36,11 @@ static void test_is_empty_stack(void **state) {
 }
 
 // Test case for is_full_stack
-static void test_is_full_stack(void **state) {
+static void test_is_full_stack() {
     struct stack *stack = create_stack(2, sizeof(int));
     assert_false(is_full_stack(stack));
-    int item1 = 10, item2 = 20;
+    const int item1 = 10;
+    const int item2 = 20;
     push_stack(stack, &item1);
     assert_false(is_full_stack(stack));
     push_stack(stack, &item2);
@@ -53,7 +49,7 @@ static void test_is_full_stack(void **state) {
 }
 
 // Test case for resize_stack
-static void test_resize_stack(void **state) {
+static void test_resize_stack() {
     struct stack *stack = create_stack(2, sizeof(int));
     assert_int_equal(stack->capacity, 2);
     resize_stack(stack);
@@ -62,9 +58,11 @@ static void test_resize_stack(void **state) {
 }
 
 // Test case for push_stack
-static void test_push_stack(void **state) {
+static void test_push_stack() {
     struct stack *stack = create_stack(2, sizeof(int));
-    int item1 = 10, item2 = 20, item3 = 30;
+    const int item1 = 10;
+    const int item2 = 20;
+    const int item3 = 30;
 
     push_stack(stack, &item1);
     assert_int_equal(stack->top, 0);
@@ -86,9 +84,10 @@ static void test_push_stack(void **state) {
 }
 
 // Test case for pop_stack
-static void test_pop_stack(void **state) {
+static void test_pop_stack() {
     struct stack *stack = create_stack(3, sizeof(int));
-    int item1 = 10, item2 = 20;
+    const int item1 = 10;
+    const int item2 = 20;
     push_stack(stack, &item1);
     push_stack(stack, &item2);
 
@@ -110,11 +109,12 @@ static void test_pop_stack(void **state) {
 }
 
 // Test case for peek_stack
-static void test_peek_stack(void **state) {
+static void test_peek_stack() {
     struct stack *stack = create_stack(3, sizeof(int));
     assert_null(peek_stack(stack)); // Peek at empty stack
 
-    int item1 = 10, item2 = 20;
+    const int item1 = 10;
+    const int item2 = 20;
     push_stack(stack, &item1);
     assert_non_null(peek_stack(stack));
     assert_int_equal(*(int *)peek_stack(stack), item1);
@@ -129,9 +129,10 @@ static void test_peek_stack(void **state) {
 }
 
 // Test case for destroy_stack
-static void test_destroy_stack(void **state) {
+static void test_destroy_stack() {
     struct stack *stack = create_stack(3, sizeof(int));
-    int item1 = 10, item2 = 20;
+    const int item1 = 10;
+    const int item2 = 20;
     push_stack(stack, &item1);
     push_stack(stack, &item2);
 
