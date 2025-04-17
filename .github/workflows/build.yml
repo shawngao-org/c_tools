@@ -19,10 +19,10 @@ jobs:
       - name: Set up Python 3.8 for gcovr
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
-      - name: install gcovr 5.0
+          python-version: 3.12.7
+      - name: install gcovr 8.3
         run: |
-          pip install gcovr==5.0 # 5.1 is not supported
+          pip install gcovr==8.3
       - name: install cmocka
         run: |
           sudo apt-get update
