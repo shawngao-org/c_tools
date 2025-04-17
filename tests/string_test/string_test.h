@@ -5,6 +5,6 @@
 #ifndef TOOLS_DEBUG_STRING_TEST_H
 #define TOOLS_DEBUG_STRING_TEST_H
 
-int string_test(void);
+void string_test();
 
 #endif //TOOLS_DEBUG_STRING_TEST_H

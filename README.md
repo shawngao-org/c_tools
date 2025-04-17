@@ -16,6 +16,18 @@
 #### Requirements
 
 + CMake 3.27 or higher
++ Cmocka lib for develop and test
+
+> If you use Cmocka lib, you must change `CMakeLists.txt`: 
+> ```cmake
+> if(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".so") # Linux
+> # ......
+> # Change to your real cmocka lib path.
+> elseif(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".dll") # Windows
+>     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I\"C:/Program Files (x86)/cmocka/include\"")
+>     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L\"C:/Program Files (x86)/cmocka/lib\"")
+> endif()
+> ```
 
 #### Linux & macOS
 
@@ -138,6 +150,14 @@ This means you can use this library for development.
 + Push your changes.
 + Create a pull request.
 + Wait for the maintainer to review your pull request.
+
+> Before submitting the code, please run the coverage check locally, 
+> and each item must be no less than `80%`.
+> ```shell
+> ./build.sh
+> # run coverage check
+> ./coverage.sh
+> ```
 
 ## License
 This project is licensed under the **MIT** License - see the LICENSE.md file for details.

@@ -18,5 +18,6 @@ int is_leap_year(int year);
 int get_days_in_month(int year, int month);
 struct tm *get_end_time(struct tm *time, char type);
 int timestamp_printf(const char *format, ...);
+char *replace_ts_token(const char *format);
 
 #endif //TOOLS_TIME_TOOLS_H

@@ -2,90 +2,155 @@
 // Created by ZetoHkr on 2025/4/14.
 //
 
-#include "stack_test.h"
-
-#include <assert.h>
-#include <tools.h>
+#include "collect/stack_tools.h"
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int stack_test() {
-    struct stack *int_stack = create_stack(5, sizeof(int));
-    const int num1 = 10;
-    const int num2 = 20;
-    const int num3 = 30;
-    const int num4 = 40;
-    const int num5 = 50;
-    const int num6 = 60;
-    push_stack(int_stack, &num1);
-    push_stack(int_stack, &num2);
-    push_stack(int_stack, &num3);
-    push_stack(int_stack, &num4);
-    if (is_full_stack(int_stack)) {
-        resize_stack(int_stack);
-    }
-    push_stack(int_stack, &num5);
-    push_stack(int_stack, &num6);
+// Helper function to compare integer data on the stack
+static int compare_int(const void *a, const void *b) {
+    return *(int *)a - *(int *)b;
+}
 
-    printf("Integer Stack:\n");
-    const int *peek_int = (int *) peek_stack(int_stack);
-    if (peek_int) printf("Peek: %d\n", *peek_int);
+// Test case for create_stack
+static void test_create_stack(void **state) {
+    struct stack *stack = create_stack(5, sizeof(int));
+    assert_non_null(stack);
+    assert_int_equal(stack->capacity, 5);
+    assert_int_equal(stack->top, -1);
+    assert_int_equal(stack->size, sizeof(int));
+    assert_non_null(stack->data);
+    free(stack->data);
+    free(stack);
+}
 
-    while (!is_empty_stack(int_stack)) {
-        int* popped_int = (int*)pop_stack(int_stack);
-        if (popped_int) {
-            printf("Popped: %d\n", *popped_int);
-            free(popped_int);
-        }
-    }
-    destroy_stack(int_stack);
+// Test case for is_empty_stack
+static void test_is_empty_stack(void **state) {
+    struct stack *stack = create_stack(5, sizeof(int));
+    assert_true(is_empty_stack(stack));
+    int item = 10;
+    push_stack(stack, &item);
+    assert_false(is_empty_stack(stack));
+    pop_stack(stack);
+    assert_true(is_empty_stack(stack));
+    destroy_stack(stack);
+}
 
-    printf("\n");
+// Test case for is_full_stack
+static void test_is_full_stack(void **state) {
+    struct stack *stack = create_stack(2, sizeof(int));
+    assert_false(is_full_stack(stack));
+    int item1 = 10, item2 = 20;
+    push_stack(stack, &item1);
+    assert_false(is_full_stack(stack));
+    push_stack(stack, &item2);
+    assert_true(is_full_stack(stack));
+    destroy_stack(stack);
+}
 
-    struct stack *float_stack = create_stack(3, sizeof(float));
-    const float f1 = 3.14f;
-    const float f2 = 2.718f;
-    push_stack(float_stack, &f1);
-    push_stack(float_stack, &f2);
+// Test case for resize_stack
+static void test_resize_stack(void **state) {
+    struct stack *stack = create_stack(2, sizeof(int));
+    assert_int_equal(stack->capacity, 2);
+    resize_stack(stack);
+    assert_int_equal(stack->capacity, 4);
+    destroy_stack(stack);
+}
 
-    printf("Float Stack:\n");
-    const float *peek_float = (float *) peek_stack(float_stack);
-    if (peek_float) printf("Peek: %.2f\n", *peek_float);
+// Test case for push_stack
+static void test_push_stack(void **state) {
+    struct stack *stack = create_stack(2, sizeof(int));
+    int item1 = 10, item2 = 20, item3 = 30;
 
-    while (!is_empty_stack(float_stack)) {
-        float* popped_float = (float*)pop_stack(float_stack);
-        if (popped_float) {
-            printf("Popped: %.2f\n", *popped_float);
-            free(popped_float);
-        }
-    }
-    destroy_stack(float_stack);
+    push_stack(stack, &item1);
+    assert_int_equal(stack->top, 0);
+    assert_non_null(stack->data[0]);
+    assert_int_equal(*(int *)stack->data[0], item1);
 
-    printf("\n");
+    push_stack(stack, &item2);
+    assert_int_equal(stack->top, 1);
+    assert_non_null(stack->data[1]);
+    assert_int_equal(*(int *)stack->data[1], item2);
 
-    struct stack *string_stack = create_stack(2, sizeof(char *));
-    char *str1 = strdup("Hello");
-    char *str2 = strdup("World");
-    push_stack(string_stack, &str1);
-    push_stack(string_stack, &str2);
+    push_stack(stack, &item3); // Should trigger resize
+    assert_int_equal(stack->top, 2);
+    assert_int_equal(stack->capacity, 4);
+    assert_non_null(stack->data[2]);
+    assert_int_equal(*(int *)stack->data[2], item3);
 
-    printf("String Stack:\n");
-    char **peek_str = (char **) peek_stack(string_stack);
-    if (peek_str && *peek_str) printf("Peek: %s\n", *peek_str);
+    destroy_stack(stack);
+}
 
-    while (!is_empty_stack(string_stack)) {
-        char** popped_str = (char**)pop_stack(string_stack);
-        if (popped_str && *popped_str) {
-            printf("Popped: %s\n", *popped_str);
-            free(*popped_str);
-            free(popped_str);
-        }
-    }
-    destroy_stack(string_stack);
+// Test case for pop_stack
+static void test_pop_stack(void **state) {
+    struct stack *stack = create_stack(3, sizeof(int));
+    int item1 = 10, item2 = 20;
+    push_stack(stack, &item1);
+    push_stack(stack, &item2);
 
-    struct stack *null_stack = create_stack(2, sizeof(int));
-    assert(!peek_stack(null_stack));
-    assert(!pop_stack(null_stack));
-    return 0;
+    void *popped_item = pop_stack(stack);
+    assert_non_null(popped_item);
+    assert_int_equal(*(int *)popped_item, item2);
+    free(popped_item);
+    assert_int_equal(stack->top, 0);
+
+    popped_item = pop_stack(stack);
+    assert_non_null(popped_item);
+    assert_int_equal(*(int *)popped_item, item1);
+    free(popped_item);
+    assert_int_equal(stack->top, -1);
+
+    assert_null(pop_stack(stack)); // Pop from empty stack
+
+    destroy_stack(stack);
+}
+
+// Test case for peek_stack
+static void test_peek_stack(void **state) {
+    struct stack *stack = create_stack(3, sizeof(int));
+    assert_null(peek_stack(stack)); // Peek at empty stack
+
+    int item1 = 10, item2 = 20;
+    push_stack(stack, &item1);
+    assert_non_null(peek_stack(stack));
+    assert_int_equal(*(int *)peek_stack(stack), item1);
+    assert_int_equal(stack->top, 0); // Top should not change after peek
+
+    push_stack(stack, &item2);
+    assert_non_null(peek_stack(stack));
+    assert_int_equal(*(int *)peek_stack(stack), item2);
+    assert_int_equal(stack->top, 1); // Top should not change after peek
+
+    destroy_stack(stack);
+}
+
+// Test case for destroy_stack
+static void test_destroy_stack(void **state) {
+    struct stack *stack = create_stack(3, sizeof(int));
+    int item1 = 10, item2 = 20;
+    push_stack(stack, &item1);
+    push_stack(stack, &item2);
+
+    destroy_stack(stack);
+    // After destroy_stack, the pointer 'stack' is still valid but the memory it points to is freed.
+    // We can't safely access its members to assert NULL.
+    // The test's success is primarily about not having memory leaks (which cmocka helps detect).
+}
+
+void stack_test() {
+    const struct CMUnitTest tests[] = {
+        cmocka_unit_test(test_create_stack),
+        cmocka_unit_test(test_is_empty_stack),
+        cmocka_unit_test(test_is_full_stack),
+        cmocka_unit_test(test_resize_stack),
+        cmocka_unit_test(test_push_stack),
+        cmocka_unit_test(test_pop_stack),
+        cmocka_unit_test(test_peek_stack),
+        cmocka_unit_test(test_destroy_stack),
+    };
+    cmocka_run_group_tests(tests, NULL, NULL);
 }

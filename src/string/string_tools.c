@@ -21,6 +21,9 @@ unsigned long safe_strlen(const char *str) {
 
 void safe_str_cpy(char *dest, const char *src) {
     if (src == NULL || dest == NULL || src[0] == '\0') {
+        if (dest != NULL) {
+            dest[0] = '\0';
+        }
         return;
     }
     int i = 0;
@@ -31,8 +34,11 @@ void safe_str_cpy(char *dest, const char *src) {
     dest[i] = '\0';
 }
 
-void safe_str_n_cpy(char *dest, const char *src, unsigned long n) {
+void safe_str_n_cpy(char *dest, const char *src, const unsigned long n) {
     if (src == NULL || dest == NULL || src[0] == '\0') {
+        if (dest != NULL) {
+            dest[0] = '\0';
+        }
         return;
     }
     int i = 0;
@@ -51,6 +57,9 @@ int parse_int(const char **s, const int width) {
     if ((*s)[i] == '-') {
         i = 1;
         flag = -1;
+    }
+    if ((*s)[i] == '+') {
+        i = 1;
     }
     int result = 0;
     while (i < width && isdigit((*s)[i])) {

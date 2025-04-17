@@ -174,8 +174,8 @@ int is_leap_year(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
-int get_days_in_month(int year, int month) {
-    switch (month) {
+int get_days_in_month(const int year, const int month) {
+    switch (month + 1) {
         case 1:
         case 3:
         case 5:
@@ -203,14 +203,14 @@ struct tm *get_end_time(struct tm *time, char type) {
     switch (type) {
         case 'M': {
             time->tm_mon = 11;
-            time->tm_mday = get_days_in_month(time->tm_year + 1900, time->tm_mon + 1);
+            time->tm_mday = get_days_in_month(time->tm_year + 1900, time->tm_mon);
             time->tm_hour = 23;
             time->tm_min = 59;
             time->tm_sec = 59;
             break;
         }
         case 'D': {
-            time->tm_mday = get_days_in_month(time->tm_year + 1900, time->tm_mon + 1);
+            time->tm_mday = get_days_in_month(time->tm_year + 1900, time->tm_mon);
             time->tm_hour = 23;
             time->tm_min = 59;
             time->tm_sec = 59;
@@ -234,13 +234,16 @@ struct tm *get_end_time(struct tm *time, char type) {
 }
 
 char *replace_ts_token(const char *format) {
-    size_t len = safe_strlen(format);
+    if (format == NULL) {
+        return NULL;
+    }
+    const size_t len = safe_strlen(format);
     char *buffer = malloc(len * 2);
     if (!buffer) return NULL;
     const char *curr = format;
     char *dest = buffer;
     while ((curr = strstr(curr, "%ts"))) {
-        size_t before = curr - format;
+        const size_t before = curr - format;
         safe_str_n_cpy(dest, format, before);
         dest += before;
         safe_str_cpy(dest, TIMESTAMP_TOKEN_FMT);
@@ -257,7 +260,7 @@ int timestamp_printf(const char *format, ...) {
     if (!new_format) return 1;
     va_list args;
     va_start(args, format);
-    int result = vprintf(new_format, args);
+    const int result = vprintf(new_format, args);
     va_end(args);
     free(new_format);
     return result;
