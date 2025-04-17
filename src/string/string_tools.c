@@ -22,7 +22,7 @@ unsigned long safe_strlen(const char *str) {
 void safe_str_cpy(char *dest, const char *src) {
     if (src == NULL || dest == NULL || src[0] == '\0') {
         if (dest != NULL) {
-            *dest = "";
+            dest[0] = '\0';
         }
         return;
     }
@@ -37,7 +37,7 @@ void safe_str_cpy(char *dest, const char *src) {
 void safe_str_n_cpy(char *dest, const char *src, const unsigned long n) {
     if (src == NULL || dest == NULL || src[0] == '\0') {
         if (dest != NULL) {
-            *dest = "";
+            dest[0] = '\0';
         }
         return;
     }
