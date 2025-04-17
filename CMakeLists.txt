@@ -9,6 +9,9 @@ if(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".so") # Linux
 elseif(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".dylib") # macOS
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I/usr/local/include")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib")
+elseif(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".dll") # Windows
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I\"C:/Program Files (x86)/cmocka/include\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L\"C:/Program Files (x86)/cmocka/lib\"")
 endif()
 
 file(GLOB_RECURSE SOURCES
