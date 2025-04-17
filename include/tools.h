@@ -231,7 +231,7 @@ void create_linked_list(struct list_node **head, void *fst_data);
  * @param head list head ptr
  * @return 0: not empty, 1: empty
  */
-int is_empty_linked_list(struct list_node *head);
+int is_empty_linked_list(const struct list_node *head);
 
 /**
  * Get list length.\n

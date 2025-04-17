@@ -9,7 +9,7 @@
 
 struct list_node *new_list_node(struct list_node *prev, struct list_node *next, void *data);
 void create_linked_list(struct list_node **head, void *fst_data);
-int is_empty_linked_list(struct list_node *head);
+int is_empty_linked_list(const struct list_node *head);
 int get_linked_list_length(struct list_node **head);
 struct list_node *insert_linked_list_in_head(struct list_node **head, void *data);
 struct list_node *insert_linked_list_by_index(struct list_node **head, void *data, int index);

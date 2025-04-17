@@ -20,7 +20,7 @@ static int compare_int_data(const struct list_node *node, const int *expected) {
 }
 
 // Test case for new_list_node
-static void test_new_list_node(void **state) {
+static void test_new_list_node() {
     int data = 10;
     struct list_node *prev_node = (struct list_node *)malloc(sizeof(struct list_node));
     struct list_node *next_node = (struct list_node *)malloc(sizeof(struct list_node));
@@ -37,7 +37,7 @@ static void test_new_list_node(void **state) {
 }
 
 // Test case for create_linked_list
-static void test_create_linked_list(void **state) {
+static void test_create_linked_list() {
     struct list_node *head = NULL;
     int data = 20;
     create_linked_list(&head, &data);
@@ -51,7 +51,7 @@ static void test_create_linked_list(void **state) {
 }
 
 // Test case for is_empty_linked_list
-static void test_is_empty_linked_list(void **state) {
+static void test_is_empty_linked_list() {
     struct list_node *head = NULL;
     assert_true(is_empty_linked_list(head));
 
@@ -63,11 +63,13 @@ static void test_is_empty_linked_list(void **state) {
 }
 
 // Test case for get_linked_list_length
-static void test_get_linked_list_length(void **state) {
+static void test_get_linked_list_length() {
     struct list_node *head = NULL;
     assert_int_equal(get_linked_list_length(&head), 0);
 
-    int data1 = 40, data2 = 50, data3 = 60;
+    int data1 = 40;
+    int data2 = 50;
+    int data3 = 60;
     create_linked_list(&head, &data1);
     assert_int_equal(get_linked_list_length(&head), 1);
 
@@ -81,9 +83,10 @@ static void test_get_linked_list_length(void **state) {
 }
 
 // Test case for insert_linked_list_in_head
-static void test_insert_linked_list_in_head(void **state) {
+static void test_insert_linked_list_in_head() {
     struct list_node *head = NULL;
-    int data1 = 70, data2 = 80;
+    int data1 = 70;
+    int data2 = 80;
 
     head = insert_linked_list_in_head(&head, &data1);
     assert_non_null(head);
@@ -104,9 +107,12 @@ static void test_insert_linked_list_in_head(void **state) {
 }
 
 // Test case for insert_linked_list_by_index
-static void test_insert_linked_list_by_index(void **state) {
+static void test_insert_linked_list_by_index() {
     struct list_node *head = NULL;
-    int data1 = 90, data2 = 100, data3 = 110, data4 = 120;
+    int data1 = 90;
+    int data2 = 100;
+    int data3 = 110;
+    int data4 = 120;
 
     // Insert into empty list
     head = insert_linked_list_by_index(&head, &data1, 0);
@@ -156,9 +162,11 @@ static void test_insert_linked_list_by_index(void **state) {
 }
 
 // Test case for insert_linked_list_in_tail
-static void test_insert_linked_list_in_tail(void **state) {
+static void test_insert_linked_list_in_tail() {
     struct list_node *head = NULL;
-    int data1 = 130, data2 = 140, data3 = 150;
+    int data1 = 130;
+    int data2 = 140;
+    int data3 = 150;
 
     head = insert_linked_list_in_tail(&head, &data1);
     assert_non_null(head);
@@ -189,9 +197,10 @@ static void test_insert_linked_list_in_tail(void **state) {
 }
 
 // Test case for remove_linked_list_node_in_head
-static void test_remove_linked_list_node_in_head(void **state) {
+static void test_remove_linked_list_node_in_head() {
     struct list_node *head = NULL;
-    int data1 = 160, data2 = 170;
+    int data1 = 160;
+    int data2 = 170;
 
     // Remove from empty list (should not crash, but returns NULL)
     struct list_node *removed_empty = remove_linked_list_node_in_head(&head);
@@ -216,9 +225,12 @@ static void test_remove_linked_list_node_in_head(void **state) {
 }
 
 // Test case for remove_linked_list_node_by_index
-static void test_remove_linked_list_node_by_index(void **state) {
+static void test_remove_linked_list_node_by_index() {
     struct list_node *head = NULL;
-    int data1 = 180, data2 = 190, data3 = 200, data4 = 210;
+    int data1 = 180;
+    int data2 = 190;
+    int data3 = 200;
+    int data4 = 210;
 
     // Remove from empty list
     struct list_node *removed_empty = remove_linked_list_node_by_index(&head, 0);
@@ -286,9 +298,11 @@ static void test_remove_linked_list_node_by_index(void **state) {
 }
 
 // Test case for destroy_linked_list
-static void test_destroy_linked_list(void **state) {
+static void test_destroy_linked_list() {
     struct list_node *head = NULL;
-    int data1 = 220, data2 = 230, data3 = 240;
+    int data1 = 220;
+    int data2 = 230;
+    int data3 = 240;
 
     create_linked_list(&head, &data1);
     head = insert_linked_list_in_tail(&head, &data2);

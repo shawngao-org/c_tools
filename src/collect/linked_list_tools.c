@@ -19,7 +19,7 @@ void create_linked_list(struct list_node **head, void *fst_data) {
     *head = new_list_node(NULL, NULL, fst_data);
 }
 
-int is_empty_linked_list(struct list_node *head) {
+int is_empty_linked_list(const struct list_node *head) {
     return head == NULL;
 }
 
@@ -134,14 +134,14 @@ struct list_node *remove_linked_list_node_by_index(struct list_node **head, cons
         return head_tmp;
     }
     if ((*head)->next != NULL) {
-        const struct list_node *wait_remove = (*head)->next;
+        struct list_node *wait_remove = (*head)->next;
         if (wait_remove->next != NULL) {
             (*head)->next = wait_remove->next;
             wait_remove->next->prev = *head;
         } else {
             (*head)->next = NULL;
         }
-        free((void *)wait_remove);
+        free(wait_remove);
     }
     return head_tmp;
 }
