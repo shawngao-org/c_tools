@@ -3,6 +3,13 @@ project(tools C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+if(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".so") # Linux
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I/usr/local/include")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib")
+elseif(CMAKE_SHARED_LIBRARY_SUFFIX STREQUAL ".dylib") # macOS
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I/usr/local/include")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib")
+endif()
 
 file(GLOB_RECURSE SOURCES
         "src/*.c" "include/*.h"
@@ -54,9 +61,12 @@ add_executable(tests
         tests/string_test/string_test.c
         tests/string_test/string_test.h
         tests/collect_test/stack_test.c
-        tests/collect_test/stack_test.h)
+        tests/collect_test/stack_test.h
+        tests/collect_test/linked_list_test.c
+        tests/collect_test/linked_list_test.h)
 
 target_link_libraries(tests PRIVATE tools)
+target_link_libraries(tests PRIVATE cmocka)
 
 option(ENABLE_COVERAGE "Enable code coverage analysis" OFF)
 

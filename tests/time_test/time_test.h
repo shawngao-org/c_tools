@@ -5,6 +5,6 @@
 #ifndef TOOLS_DEBUG_TIME_TEST_H
 #define TOOLS_DEBUG_TIME_TEST_H
 
-int time_test();
+void time_test();
 
 #endif //TOOLS_DEBUG_TIME_TEST_H

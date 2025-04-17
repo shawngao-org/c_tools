@@ -52,6 +52,9 @@ int parse_int(const char **s, const int width) {
         i = 1;
         flag = -1;
     }
+    if ((*s)[i] == '+') {
+        i = 1;
+    }
     int result = 0;
     while (i < width && isdigit((*s)[i])) {
         if ((*s)[i] > '9' || (*s)[i] < '0') {

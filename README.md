@@ -16,6 +16,7 @@
 #### Requirements
 
 + CMake 3.27 or higher
++ Cmocka lib for develop and test
 
 #### Linux & macOS
 

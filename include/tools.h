@@ -81,7 +81,7 @@ int is_leap_year(int year);
 /**
  * Get days in month by year and month
  * @param year year
- * @param month month
+ * @param month month[0-11]
  * @return days in month
  */
 int get_days_in_month(int year, int month);
@@ -104,6 +104,13 @@ struct tm *get_end_time(struct tm *time, char type);
  * @return result
  */
 int timestamp_printf(const char *format, ...);
+
+/**
+ * Replace %ts token in format string
+ * @param format format string
+ * @return new format string
+ */
+char *replace_ts_token(const char *format);
 
 /**
  * Get string length
@@ -203,11 +210,81 @@ struct list_node {
     struct list_node *next;
 };
 
+/**
+ * Create new list node.
+ * @param prev pre node ptr
+ * @param next next node ptr
+ * @param data new node data
+ * @return new node ptr
+ */
 struct list_node *new_list_node(struct list_node *prev, struct list_node *next, void *data);
+
+/**
+ * Create a new linked list.
+ * @param head null ptr
+ * @param fst_data first node data
+ */
 void create_linked_list(struct list_node **head, void *fst_data);
+
+/**
+ * Check if the list is empty.
+ * @param head list head ptr
+ * @return 0: not empty, 1: empty
+ */
 int is_empty_linked_list(struct list_node *head);
-void insert_linked_list_in_head(struct list_node **head, void *data);
-void insert_linked_list_in_tail(struct list_node **head, void *data);
+
+/**
+ * Get list length.\n
+ * Don't worry about the head ptr reaching the end of the list.
+ * @param head list head ptr
+ * @return list length
+ */
+int get_linked_list_length(struct list_node **head);
+
+/**
+ * Insert data in head.
+ * @param head list head ptr
+ * @param data data
+ * @return new head ptr
+ */
+struct list_node *insert_linked_list_in_head(struct list_node **head, void *data);
+
+/**
+ * Insert data by index.
+ * @param head list head ptr
+ * @param data data
+ * @param index index, starts from 0
+ * @return original head ptr
+ */
+struct list_node *insert_linked_list_by_index(struct list_node **head, void *data, int index);
+
+/**
+ * Insert data in tail.
+ * @param head list head ptr
+ * @param data data
+ * @return original head ptr
+ */
+struct list_node *insert_linked_list_in_tail(struct list_node **head, void *data);
+
+/**
+ * Remove data in head.
+ * @param head list head ptr
+ * @return original head ptr
+ */
+struct list_node *remove_linked_list_node_in_head(struct list_node **head);
+
+/**
+ * Remove data by index.
+ * @param head list head ptr
+ * @param index index, starts from 0
+ * @return original head ptr
+ */
+struct list_node *remove_linked_list_node_by_index(struct list_node **head, int index);
+
+/**
+ * Destroy linked list.
+ * @param head list head ptr
+ */
 void destroy_linked_list(struct list_node **head);
 
 #endif //TOOLS_TOOLS_H

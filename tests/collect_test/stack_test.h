@@ -5,6 +5,6 @@
 #ifndef TOOLS_STACK_TEST_H
 #define TOOLS_STACK_TEST_H
 
-int stack_test();
+void stack_test();
 
 #endif //TOOLS_STACK_TEST_H
