@@ -139,8 +139,6 @@ static void test_insert_linked_list_by_index() {
     assert_null(head->next->next->next);
 
     // Insert in the middle
-    struct list_node *temp_head = head; // Keep track of the original head
-    head = temp_head;
     head = insert_linked_list_by_index(&head, &data4, 1);
     assert_ptr_equal(head->data, &data2);
     assert_ptr_equal(head->next->data, &data4);
@@ -152,8 +150,6 @@ static void test_insert_linked_list_by_index() {
     assert_null(head->next->next->next->next);
 
     // Insert with out-of-range negative index
-    temp_head = head;
-    head = temp_head;
     struct list_node *original_head_negative = head;
     head = insert_linked_list_by_index(&head, &data1, -1);
     assert_ptr_equal(head, original_head_negative);
@@ -244,7 +240,6 @@ static void test_remove_linked_list_node_by_index() {
     // Remove from the head of a multi-node list
     create_linked_list(&head, &data1);
     head = insert_linked_list_in_tail(&head, &data2);
-    struct list_node *temp_head = head;
     head = remove_linked_list_node_by_index(&head, 0);
     assert_non_null(head);
     assert_ptr_equal(head->data, &data2);
@@ -255,7 +250,6 @@ static void test_remove_linked_list_node_by_index() {
     create_linked_list(&head, &data1);
     head = insert_linked_list_in_tail(&head, &data2);
     head = insert_linked_list_in_tail(&head, &data3);
-    temp_head = head;
     head = remove_linked_list_node_by_index(&head, 2);
     assert_non_null(head);
     struct list_node *current = head;
@@ -270,7 +264,6 @@ static void test_remove_linked_list_node_by_index() {
     head = insert_linked_list_in_tail(&head, &data2);
     head = insert_linked_list_in_tail(&head, &data3);
     head = insert_linked_list_in_tail(&head, &data4);
-    temp_head = head;
     head = remove_linked_list_node_by_index(&head, 1);
     assert_non_null(head);
     assert_ptr_equal(head->data, &data1);
@@ -281,15 +274,11 @@ static void test_remove_linked_list_node_by_index() {
     assert_null(head->next->next->next);
 
     // Remove with out-of-range index (negative)
-    temp_head = head;
-    head = temp_head;
     struct list_node *original_head_negative_remove = head;
     head = remove_linked_list_node_by_index(&head, -1);
     assert_ptr_equal(head, original_head_negative_remove);
 
     // Remove with out-of-range index (too large)
-    temp_head = head;
-    head = temp_head;
     struct list_node *original_head_large_remove = head;
     head = remove_linked_list_node_by_index(&head, 100);
     assert_ptr_equal(head, original_head_large_remove);
