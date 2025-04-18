@@ -239,7 +239,7 @@ static void test_remove_linked_list_node_by_index() {
 
     // Remove from the head of a multi-node list
     create_linked_list(&head, &data1);
-    head = insert_linked_list_in_tail(&head, &data2);\
+    head = insert_linked_list_in_tail(&head, &data2);
     head = remove_linked_list_node_by_index(&head, 0);
     assert_non_null(head);
     assert_ptr_equal(head->data, &data2);
@@ -263,7 +263,7 @@ static void test_remove_linked_list_node_by_index() {
     create_linked_list(&head, &data1);
     head = insert_linked_list_in_tail(&head, &data2);
     head = insert_linked_list_in_tail(&head, &data3);
-    head = insert_linked_list_in_tail(&head, &data4);\
+    head = insert_linked_list_in_tail(&head, &data4);
     head = remove_linked_list_node_by_index(&head, 1);
     assert_non_null(head);
     assert_ptr_equal(head->data, &data1);
